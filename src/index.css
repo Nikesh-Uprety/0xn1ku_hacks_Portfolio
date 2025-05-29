@@ -147,4 +147,38 @@
     box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
     transform: translateY(-2px);
   }
+
+  /* Cursor Illusion Effect */
+  .cursor-illusion {
+    transition: all 0.3s ease;
+    filter: hue-rotate(15deg) saturate(1.2);
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 
+      0 0 30px rgba(0, 255, 65, 0.3),
+      inset 0 0 20px rgba(0, 255, 65, 0.1);
+  }
+
+  .cursor-illusion::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+    border-radius: inherit;
+    z-index: -1;
+    animation: pulse-glow 1s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-glow {
+    0% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+  }
 }
