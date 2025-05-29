@@ -1,42 +1,34 @@
-import { useState, useEffect } from "react";
-import { Github, Terminal, Zap } from "lucide-react";
 
-// Placeholder component for Monitor icon - moved to top
-const Monitor = ({ className }: { className?: string }) => (
-  <div className={className}>
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20 3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h6l-2 2v1h8v-1l-2-2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 13H4V5h16v11z"/>
-    </svg>
-  </div>
-);
+import { useState, useEffect } from "react";
+import { Github, Terminal, Zap, Code, Globe, Shield } from "lucide-react";
 
 const projects = [
   {
     id: 1,
-    name: "VulnScanner Pro",
-    description: "Advanced vulnerability scanner with AI-powered threat detection and automated exploitation frameworks.",
-    tech: ["Python", "Nmap", "Metasploit", "AI/ML"],
-    github: "https://github.com/Nikesh-Uprety",
+    name: "React.JS Learning Path",
+    description: "Comprehensive 20-hour React.JS course covering fundamentals, hooks, state management, and modern development practices.",
+    tech: ["React", "JavaScript", "CSS", "HTML"],
+    github: "https://github.com/Nikesh-Uprety/React.JS_LearningPath-20hrsCOURSE",
     demo: "#",
-    icon: Terminal
+    icon: Code
   },
   {
     id: 2,
-    name: "CyberShield Dashboard",
-    description: "Real-time cybersecurity monitoring dashboard with threat intelligence and incident response automation.",
-    tech: ["React", "Node.js", "MongoDB", "WebSockets"],
-    github: "https://github.com/Nikesh-Uprety",
+    name: "NIKU BLOG MERN",
+    description: "Full-stack blog application built with MongoDB, Express.js, React, and Node.js featuring user authentication and content management.",
+    tech: ["MongoDB", "Express.js", "React", "Node.js"],
+    github: "https://github.com/Nikesh-Uprety/NIKU_BLOG_MERN",
     demo: "#",
-    icon: Monitor
+    icon: Globe
   },
   {
     id: 3,
-    name: "SecureAPI Gateway",
-    description: "Enterprise-grade API security gateway with advanced authentication, rate limiting, and threat protection.",
-    tech: ["Go", "Docker", "Kubernetes", "Redis"],
-    github: "https://github.com/Nikesh-Uprety",
+    name: "Hash Buster Tool",
+    description: "Python-based hash cracking tool for cybersecurity testing and password analysis with multiple hash algorithm support.",
+    tech: ["Python", "Cryptography", "Security", "CLI"],
+    github: "https://github.com/Nikesh-Uprety/Hash-Buster_Tool.py",
     demo: "#",
-    icon: Zap
+    icon: Shield
   }
 ];
 
@@ -72,7 +64,7 @@ export const ProjectsSection = () => {
           FEATURED <span className="text-neon-green">EXPLOITS</span>
         </h2>
         <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-          A collection of cybersecurity tools, penetration testing frameworks, and security research projects.
+          A collection of development projects, cybersecurity tools, and learning resources.
         </p>
       </div>
 
