@@ -1,7 +1,7 @@
 
 import { HeroSection } from "@/components/HeroSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
-import { Terminal } from "@/components/Terminal";
+import Terminal from "@/components/Terminal";
 import { MatrixRain } from "@/components/MatrixRain";
 
 const Index = () => {
