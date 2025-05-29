@@ -1,11 +1,12 @@
 
 import { useState, useRef, useEffect } from "react";
-import { Minus, Square, X } from "lucide-react";
+import { Minus, Square, X, Maximize } from "lucide-react";
 
 const Terminal = () => {
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
   const [commands, setCommands] = useState<string[]>([
-    "Welcome to Nikesh's Kali Linux Terminal",
+    "Welcome to 0xN1kU_H4X_!@kali's Linux Terminal",
     "Type 'help' for available commands",
     ""
   ]);
@@ -28,13 +29,13 @@ const Terminal = () => {
       "  hack          - Initialize hacking mode 😈",
       ""
     ],
-    whoami: () => ["nikesh"],
+    whoami: () => ["0xN1kU_H4X_!"],
     ls: () => [
-      "drwxr-xr-x  2 nikesh nikesh 4096 Dec 15 10:30 exploits/",
-      "drwxr-xr-x  2 nikesh nikesh 4096 Dec 15 10:30 payloads/",
-      "drwxr-xr-x  2 nikesh nikesh 4096 Dec 15 10:30 scripts/",
-      "-rw-r--r--  1 nikesh nikesh 1337 Dec 15 10:30 targets.txt",
-      "-rwxr-xr-x  1 nikesh nikesh 2048 Dec 15 10:30 scanner.py",
+      "drwxr-xr-x  2 0xN1kU_H4X_! 0xN1kU_H4X_! 4096 Dec 15 10:30 exploits/",
+      "drwxr-xr-x  2 0xN1kU_H4X_! 0xN1kU_H4X_! 4096 Dec 15 10:30 payloads/",
+      "drwxr-xr-x  2 0xN1kU_H4X_! 0xN1kU_H4X_! 4096 Dec 15 10:30 scripts/",
+      "-rw-r--r--  1 0xN1kU_H4X_! 0xN1kU_H4X_! 1337 Dec 15 10:30 targets.txt",
+      "-rwxr-xr-x  1 0xN1kU_H4X_! 0xN1kU_H4X_! 2048 Dec 15 10:30 scanner.py",
       ""
     ],
     ifconfig: () => [
@@ -47,8 +48,8 @@ const Terminal = () => {
     "ps aux": () => [
       "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND",
       "root         1  0.0  0.1  22520  1616 ?        Ss   10:00   0:01 /sbin/init",
-      "nikesh    1337  0.0  0.5  58972  5120 pts/0    S+   10:30   0:00 ./exploit",
-      "nikesh    1338  0.0  0.3  45672  3456 pts/1    R+   10:31   0:00 nmap -sS target",
+      "0xN1kU    1337  0.0  0.5  58972  5120 pts/0    S+   10:30   0:00 ./exploit",
+      "0xN1kU    1338  0.0  0.3  45672  3456 pts/1    R+   10:31   0:00 nmap -sS target",
       ""
     ],
     nmap: () => [
@@ -63,7 +64,7 @@ const Terminal = () => {
       ""
     ],
     neofetch: () => [
-      "                   -`                    nikesh@kali-linux",
+      "                   -`                    0xN1kU_H4X_!@kali-linux",
       "                  .o+`                   -----------------",
       "                 `ooo/                   OS: Kali GNU/Linux Rolling x86_64",
       "                `+oooo:                  Host: Hacker Workstation v2.0",
@@ -101,7 +102,7 @@ const Terminal = () => {
 
   const handleCommand = (cmd: string) => {
     const trimmedCmd = cmd.trim().toLowerCase();
-    const newCommands = [...commands, `nikesh@kali:~$ ${cmd}`];
+    const newCommands = [...commands, `0xN1kU_H4X_!@kali:~$ ${cmd}`];
     
     if (simulatedCommands[trimmedCmd]) {
       const output = simulatedCommands[trimmedCmd]();
@@ -161,23 +162,32 @@ const Terminal = () => {
     );
   }
 
+  const terminalClasses = isMaximized 
+    ? "fixed inset-4 z-50 terminal-window rounded-lg overflow-hidden"
+    : "fixed bottom-4 right-4 w-96 h-80 z-50 terminal-window rounded-lg overflow-hidden";
+
+  const contentHeight = isMaximized ? "calc(100% - 40px)" : "h-64";
+
   return (
-    <div className="fixed bottom-4 right-4 w-96 h-80 z-50 terminal-window rounded-lg overflow-hidden">
+    <div className={terminalClasses}>
       {/* Terminal Header */}
       <div className="flex items-center justify-between bg-cyber-dark border-b border-neon-green/30 px-4 py-2">
-        <span className="text-sm font-mono text-neon-green">nikesh@kali: ~</span>
+        <span className="text-sm font-mono text-neon-green">0xN1kU_H4X_!@kali: ~</span>
         <div className="flex space-x-2">
           <button
             onClick={() => setIsMinimized(true)}
-            className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-400 transition-colors"
+            className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-400 transition-colors flex items-center justify-center"
           >
-            <Minus className="w-2 h-2 mx-auto" />
+            <Minus className="w-2 h-2" />
           </button>
-          <button className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-400 transition-colors">
-            <Square className="w-2 h-2 mx-auto" />
+          <button
+            onClick={() => setIsMaximized(!isMaximized)}
+            className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-400 transition-colors flex items-center justify-center"
+          >
+            <Maximize className="w-2 h-2" />
           </button>
-          <button className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors">
-            <X className="w-2 h-2 mx-auto" />
+          <button className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors flex items-center justify-center">
+            <X className="w-2 h-2" />
           </button>
         </div>
       </div>
@@ -185,7 +195,7 @@ const Terminal = () => {
       {/* Terminal Content */}
       <div 
         ref={terminalRef}
-        className="h-64 p-4 overflow-y-auto font-mono text-sm bg-black"
+        className={`${contentHeight} p-4 overflow-y-auto font-mono text-sm bg-black cursor-text`}
       >
         {commands.map((line, index) => (
           <div key={index} className="text-neon-green whitespace-pre-wrap">
@@ -193,7 +203,7 @@ const Terminal = () => {
           </div>
         ))}
         <div className="flex items-center text-neon-green">
-          <span>nikesh@kali:~$ </span>
+          <span>0xN1kU_H4X_!@kali:~$ </span>
           <input
             ref={inputRef}
             type="text"

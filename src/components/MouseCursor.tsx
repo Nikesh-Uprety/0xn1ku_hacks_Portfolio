@@ -16,7 +16,7 @@ export const MouseCursor = () => {
       
       // Check if hovering over interactive elements
       const target = e.target as HTMLElement;
-      const isInteractive = target.closest('a, button, .cyber-button, .glass-morphism');
+      const isInteractive = target.closest('a, button, .cyber-button, .glass-morphism, input, .terminal-window');
       setIsHovering(!!isInteractive);
     };
 
@@ -29,9 +29,9 @@ export const MouseCursor = () => {
 
   return (
     <>
-      {/* Custom Cursor - Green Dot Only */}
+      {/* Custom Cursor - Green Dot */}
       <div
-        className={`fixed pointer-events-none z-50 transition-all duration-150 ease-out ${
+        className={`fixed pointer-events-none z-[9999] transition-all duration-150 ease-out ${
           isHovering ? 'scale-150' : 'scale-100'
         }`}
         style={{
@@ -48,7 +48,7 @@ export const MouseCursor = () => {
       {/* Simple outer ring on hover */}
       {isHovering && (
         <div
-          className="fixed pointer-events-none z-40"
+          className="fixed pointer-events-none z-[9998]"
           style={{
             left: position.x,
             top: position.y,
