@@ -19,7 +19,9 @@ const Index = () => {
                 NIKESH.UPRETY
               </div>
               <div className="hidden md:flex space-x-8">
-                <a href="#home" className="hover:text-neon-green transition-colors">HOME</a>
+                <a href="#home" className="hover:text-neon-green transition-colors">
+                  
+                </a>
                 <a href="#projects" className="hover:text-neon-green transition-colors">PROJECTS</a>
                 <a href="https://github.com/Nikesh-Uprety" className="hover:text-neon-green transition-colors" target="_blank" rel="noopener noreferrer">GITHUB</a>
                 <a href="#contact" className="hover:text-neon-green transition-colors">CONTACT</a>

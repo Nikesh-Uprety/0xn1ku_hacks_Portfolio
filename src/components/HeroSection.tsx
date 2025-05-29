@@ -20,7 +20,7 @@ export const HeroSection = () => {
           >
             <div className="relative">
               <img
-                src="/lovable-uploads/8a4539ad-721b-4f8a-9fd3-29717a681027.png"
+                src="/lovable-uploads/full_final_banner.png"
                 alt="Nikesh Uprety"
                 className={`w-80 h-80 object-cover rounded-lg neon-border animate-glow-pulse ${
                   isGlitching ? "opacity-50" : ""
