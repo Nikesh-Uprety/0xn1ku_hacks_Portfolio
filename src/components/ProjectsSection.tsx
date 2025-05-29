@@ -58,13 +58,14 @@ export const ProjectsSection = () => {
     <div className="container mx-auto px-6">
       <div className="text-center mb-16">
         <div className="font-mono text-neon-green text-lg mb-4">
-          nikesh@kali:~$ ls -la /projects/
+        .0xN1kU_H4X_!@kali:~$ ls -la /projects/
         </div>
         <h2 className="text-4xl md:text-5xl font-cyber font-bold text-white mb-4">
-          FEATURED <span className="text-neon-green">EXPLOITS</span>
+          FEATURED <span className="text-neon-green">PROJECTS</span>
         </h2>
         <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-          A collection of development projects, cybersecurity tools, and learning resources.
+          A collection of development projects, cybersecurity tools, and
+          learning resources.
         </p>
       </div>
 
@@ -72,13 +73,13 @@ export const ProjectsSection = () => {
         {projects.map((project, index) => {
           const IconComponent = project.icon;
           const isVisible = visibleProjects.includes(project.id);
-          
+
           return (
             <div
               key={project.id}
               data-project-id={project.id}
               className={`glass-morphism rounded-lg p-6 hover:border-neon-green transition-all duration-500 group scanline ${
-                isVisible ? 'animate-fade-slide-up' : 'opacity-0'
+                isVisible ? "animate-fade-slide-up" : "opacity-0"
               }`}
               style={{ animationDelay: `${index * 200}ms` }}
             >
@@ -88,11 +89,11 @@ export const ProjectsSection = () => {
                   {project.name}
                 </h3>
               </div>
-              
+
               <p className="text-gray-400 mb-4 font-mono text-sm leading-relaxed">
                 {project.description}
               </p>
-              
+
               <div className="flex flex-wrap gap-2 mb-6">
                 {project.tech.map((tech) => (
                   <span
@@ -103,7 +104,7 @@ export const ProjectsSection = () => {
                   </span>
                 ))}
               </div>
-              
+
               <div className="flex space-x-4">
                 <a
                   href={project.github}

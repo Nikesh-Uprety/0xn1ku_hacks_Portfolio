@@ -6,9 +6,29 @@ const Terminal = () => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [commands, setCommands] = useState<string[]>([
-    "Welcome to 0xN1kU_H4X_!@kali's Linux Terminal",
+    "                   -`                    0xN1kU_H4X_!@kali-linux",
+    "                  .o+`                   -----------------",
+    "                 `ooo/                   OS: Kali GNU/Linux Rolling x86_64",
+    "                `+oooo:                  Host: Aws Cluster Workstation v2.0",
+    "               `+oooooo:                 Kernel: 6.1.0-kali7-amd64",
+    "               -+oooooo+:                Shell: zsh 5.9",
+    "             `/:-:++oooo+:               Resolution: 1920x1080",
+    "            `/++++/+++++++:              Terminal: gnome-terminal",
+    "           `/++++++++++++++:             CPU: Intel i7-12700K (16) @ 5.0GHz",
+    "          `/+++ooooooooo+++/             GPU: NVIDIA RTX 3080",
+    "         ./ooosssso++osssssso+`          Memory: 32GB DDR4",
+    "        .oossssso-````/ossssss+`         ",
+    "       -osssssso.      :ssssssso.        ",
+    "      :osssssss/        osssso+++.       ",
+    "     /ossssssss/        +ssssooo/-       ",
+    "   `/ossssso+/:-        -:/+osssso+-     ",
+    "  `+sso+:-`                 `.-/+oso:    ",
+    " `++:.                           `-/+/   ",
+    " .`                                 `/   ",
+    "",
+
     "Type 'help' for available commands",
-    ""
+    "",
   ]);
   const [currentInput, setCurrentInput] = useState("");
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -27,30 +47,31 @@ const Terminal = () => {
       "  clear         - Clear terminal",
       "  neofetch      - System information",
       "  hack          - Initialize hacking mode 😈",
-      ""
+      "",
     ],
     whoami: () => ["0xN1kU_H4X_!"],
     ls: () => [
       "drwxr-xr-x  2 0xN1kU_H4X_! 0xN1kU_H4X_! 4096 Dec 15 10:30 exploits/",
       "drwxr-xr-x  2 0xN1kU_H4X_! 0xN1kU_H4X_! 4096 Dec 15 10:30 payloads/",
       "drwxr-xr-x  2 0xN1kU_H4X_! 0xN1kU_H4X_! 4096 Dec 15 10:30 scripts/",
+      "drwxr-xr-x  2 0xN1kU_H4X_! 0xN1kU_H4X_! 4096 Dec 15 10:30 top_secret.txt/",
       "-rw-r--r--  1 0xN1kU_H4X_! 0xN1kU_H4X_! 1337 Dec 15 10:30 targets.txt",
       "-rwxr-xr-x  1 0xN1kU_H4X_! 0xN1kU_H4X_! 2048 Dec 15 10:30 scanner.py",
-      ""
+      "",
     ],
     ifconfig: () => [
       "eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500",
       "        inet 192.168.1.100  netmask 255.255.255.0  broadcast 192.168.1.255",
       "        inet6 fe80::a00:27ff:fe4e:66a1  prefixlen 64  scopeid 0x20<link>",
       "        ether 08:00:27:4e:66:a1  txqueuelen 1000  (Ethernet)",
-      ""
+      "",
     ],
     "ps aux": () => [
       "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND",
       "root         1  0.0  0.1  22520  1616 ?        Ss   10:00   0:01 /sbin/init",
       "0xN1kU    1337  0.0  0.5  58972  5120 pts/0    S+   10:30   0:00 ./exploit",
       "0xN1kU    1338  0.0  0.3  45672  3456 pts/1    R+   10:31   0:00 nmap -sS target",
-      ""
+      "",
     ],
     nmap: () => [
       "Starting Nmap 7.94 ( https://nmap.org )",
@@ -61,7 +82,7 @@ const Terminal = () => {
       "80/tcp   open  http",
       "443/tcp  open  https",
       "3389/tcp open  ms-wbt-server",
-      ""
+      "",
     ],
     neofetch: () => [
       "                   -`                    0xN1kU_H4X_!@kali-linux",
@@ -83,7 +104,7 @@ const Terminal = () => {
       "  `+sso+:-`                 `.-/+oso:    ",
       " `++:.                           `-/+/   ",
       " .`                                 `/   ",
-      ""
+      "",
     ],
     hack: () => [
       "Initializing hacking protocols...",
@@ -92,12 +113,12 @@ const Terminal = () => {
       "Accessing mainframe... ████████████ 100%",
       "You're in! 🔓",
       "Just kidding! This is just a demo terminal 😄",
-      ""
+      "",
     ],
     clear: () => {
       setCommands([]);
       return [];
-    }
+    },
   };
 
   const handleCommand = (cmd: string) => {
