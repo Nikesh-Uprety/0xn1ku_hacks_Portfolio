@@ -1,13 +1,14 @@
-
 import { HeroSection } from "@/components/HeroSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import Terminal from "@/components/Terminal";
 import { MatrixRain } from "@/components/MatrixRain";
+import { MouseCursor } from "@/components/MouseCursor";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-cyber-bg relative overflow-hidden">
+    <div className="min-h-screen bg-cyber-bg relative overflow-hidden cursor-none">
       <MatrixRain />
+      <MouseCursor />
       
       <div className="relative z-10">
         {/* Navigation */}
