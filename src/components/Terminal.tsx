@@ -284,10 +284,9 @@ const Terminal = () => {
       {/* Terminal Content */}
       <div 
         ref={terminalRef}
-        className="flex-1 p-4 overflow-y-auto font-mono text-sm bg-black cursor-text"
+        className="flex-1 p-4 overflow-y-auto font-mono text-sm bg-black cursor-text terminal-scroll"
         style={{ 
           minHeight: 0,
-          overflowY: 'auto',
           scrollBehavior: 'smooth'
         }}
       >
