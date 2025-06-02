@@ -5,17 +5,39 @@ interface TypeWriterProps {
   texts: string[];
   speed?: number;
   delay?: number;
+  repeatInterval?: number;
 }
 
-export const TypeWriter = ({ texts, speed = 50, delay = 1000 }: TypeWriterProps) => {
+export const TypeWriter = ({ texts, speed = 50, delay = 1000, repeatInterval = 10000 }: TypeWriterProps) => {
   const [displayedTexts, setDisplayedTexts] = useState<string[]>([]);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  // Reset function to restart the animation
+  const resetAnimation = () => {
+    setDisplayedTexts([]);
+    setCurrentTextIndex(0);
+    setCurrentCharIndex(0);
+    setIsTyping(true);
+    setIsCompleted(false);
+  };
+
+  useEffect(() => {
+    if (isCompleted) {
+      const repeatTimeout = setTimeout(() => {
+        resetAnimation();
+      }, repeatInterval);
+
+      return () => clearTimeout(repeatTimeout);
+    }
+  }, [isCompleted, repeatInterval]);
 
   useEffect(() => {
     if (currentTextIndex >= texts.length) {
       setIsTyping(false);
+      setIsCompleted(true);
       return;
     }
 
@@ -51,9 +73,6 @@ export const TypeWriter = ({ texts, speed = 50, delay = 1000 }: TypeWriterProps)
       {displayedTexts.map((text, index) => (
         <p key={index} className="text-gray-300">
           <span className="text-neon-blue">{">"}</span> {text}
-          {index === currentTextIndex - 1 && isTyping && (
-            <span className="animate-blink ml-1">_</span>
-          )}
         </p>
       ))}
       {currentTextIndex < texts.length && (
