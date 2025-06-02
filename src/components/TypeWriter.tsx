@@ -69,16 +69,16 @@ export const TypeWriter = ({ texts, speed = 50, delay = 1000, repeatInterval = 1
   }, [currentTextIndex, currentCharIndex, texts, speed, delay]);
 
   return (
-    <div className="font-mono text-lg space-y-2">
+    <div className="font-mono text-base sm:text-lg space-y-2">
       {displayedTexts.map((text, index) => (
         <p key={index} className="text-gray-300">
           <span className="text-neon-blue">{">"}</span> {text}
         </p>
       ))}
-      {currentTextIndex < texts.length && (
+      {currentTextIndex < texts.length && isTyping && (
         <p className="text-gray-300">
           <span className="text-neon-blue">{">"}</span> {displayedTexts[currentTextIndex] || ''}
-          {isTyping && <span className="animate-blink ml-1">_</span>}
+          <span className="animate-blink ml-1">_</span>
         </p>
       )}
     </div>
