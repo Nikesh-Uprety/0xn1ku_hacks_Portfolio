@@ -1,8 +1,10 @@
+
 import { HeroSection } from "@/components/HeroSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import Terminal from "@/components/Terminal";
 import { MatrixRain } from "@/components/MatrixRain";
 import { MouseCursor } from "@/components/MouseCursor";
+import { Github, Linkedin } from "lucide-react";
 
 const Index = () => {
   return (
@@ -18,12 +20,17 @@ const Index = () => {
               <div className="font-cyber font-bold text-xl text-neon-green glitch-text" data-text="NIKESH.UPRETY">
                 NIKESH.UPRETY
               </div>
-              <div className="hidden md:flex space-x-8">
+              <div className="hidden md:flex space-x-8 items-center">
                 <a href="#home" className="hover:text-neon-green transition-colors">
-                  
+                  HOME
                 </a>
                 <a href="#projects" className="hover:text-neon-green transition-colors">PROJECTS</a>
-                <a href="https://github.com/Nikesh-Uprety" className="hover:text-neon-green transition-colors" target="_blank" rel="noopener noreferrer">GITHUB</a>
+                <a href="https://github.com/Nikesh-Uprety" className="hover:text-neon-green transition-colors" target="_blank" rel="noopener noreferrer">
+                  <Github className="w-5 h-5" />
+                </a>
+                <a href="https://www.linkedin.com/in/nikesh-uprety-287a88244/" className="hover:text-neon-green transition-colors" target="_blank" rel="noopener noreferrer">
+                  <Linkedin className="w-5 h-5" />
+                </a>
                 <a href="#contact" className="hover:text-neon-green transition-colors">CONTACT</a>
               </div>
             </div>
@@ -60,7 +67,7 @@ const Index = () => {
                   GitHub Profile
                 </a>
                 <a 
-                  href="mailto:contact@nikeshuprety.dev" 
+                  href="mailto:upretynikesh021@gmail.com" 
                   className="cyber-button px-6 py-3 rounded font-mono"
                 >
                   Send Message

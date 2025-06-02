@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export const HeroSection = () => {
   const [isGlitching, setIsGlitching] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleImageHover = () => {
     setIsGlitching(true);
@@ -19,12 +20,20 @@ export const HeroSection = () => {
             onMouseEnter={handleImageHover}
           >
             <div className="relative">
+              {!imageLoaded && (
+                <div className="w-80 h-80 bg-cyber-dark rounded-lg neon-border animate-pulse flex items-center justify-center">
+                  <div className="text-neon-green font-mono">Loading...</div>
+                </div>
+              )}
               <img
                 src="/lovable-uploads/full_final_banner.png"
                 alt="Nikesh Uprety"
-                className={`w-80 h-80 object-cover rounded-lg neon-border animate-glow-pulse ${
+                className={`w-80 h-80 object-cover rounded-lg neon-border animate-glow-pulse transition-opacity duration-300 ${
                   isGlitching ? "opacity-50" : ""
-                }`}
+                } ${imageLoaded ? "opacity-100" : "opacity-0 absolute"}`}
+                onLoad={() => setImageLoaded(true)}
+                loading="eager"
+                decoding="async"
               />
               {isGlitching && (
                 <div className="absolute inset-0 bg-neon-green opacity-20 rounded-lg animate-pulse"></div>

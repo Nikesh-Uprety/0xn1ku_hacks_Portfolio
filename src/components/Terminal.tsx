@@ -1,10 +1,10 @@
-
 import { useState, useRef, useEffect } from "react";
-import { Minus, Square, X, Maximize } from "lucide-react";
+import { Minus, Square, X, Maximize, Minimize } from "lucide-react";
 
 const Terminal = () => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [commands, setCommands] = useState<string[]>([
     "                   -`                    0xN1kU_H4X_!@kali-linux",
     "                  .o+`                   -----------------",
@@ -26,7 +26,6 @@ const Terminal = () => {
     " `++:.                           `-/+/   ",
     " .`                                 `/   ",
     "",
-
     "Type 'help' for available commands",
     "",
   ]);
@@ -170,6 +169,10 @@ const Terminal = () => {
     }
   }, [commands]);
 
+  if (!isVisible) {
+    return null;
+  }
+
   if (isMinimized) {
     return (
       <div className="fixed bottom-4 right-4 z-50">
@@ -184,15 +187,13 @@ const Terminal = () => {
   }
 
   const terminalClasses = isMaximized 
-    ? "fixed inset-4 z-50 terminal-window rounded-lg overflow-hidden"
-    : "fixed bottom-4 right-4 w-96 h-80 z-50 terminal-window rounded-lg overflow-hidden";
-
-  const contentHeight = isMaximized ? "calc(100% - 40px)" : "h-64";
+    ? "fixed inset-8 z-50 terminal-window rounded-lg overflow-hidden flex flex-col"
+    : "fixed bottom-4 right-4 w-96 h-80 z-50 terminal-window rounded-lg overflow-hidden flex flex-col";
 
   return (
     <div className={terminalClasses}>
       {/* Terminal Header */}
-      <div className="flex items-center justify-between bg-cyber-dark border-b border-neon-green/30 px-4 py-2">
+      <div className="flex items-center justify-between bg-cyber-dark border-b border-neon-green/30 px-4 py-2 flex-shrink-0">
         <span className="text-sm font-mono text-neon-green">0xN1kU_H4X_!@kali: ~</span>
         <div className="flex space-x-2">
           <button
@@ -205,9 +206,12 @@ const Terminal = () => {
             onClick={() => setIsMaximized(!isMaximized)}
             className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-400 transition-colors flex items-center justify-center"
           >
-            <Maximize className="w-2 h-2" />
+            {isMaximized ? <Minimize className="w-2 h-2" /> : <Maximize className="w-2 h-2" />}
           </button>
-          <button className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors flex items-center justify-center">
+          <button 
+            onClick={() => setIsVisible(false)}
+            className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors flex items-center justify-center"
+          >
             <X className="w-2 h-2" />
           </button>
         </div>
@@ -216,7 +220,12 @@ const Terminal = () => {
       {/* Terminal Content */}
       <div 
         ref={terminalRef}
-        className={`${contentHeight} p-4 overflow-y-auto font-mono text-sm bg-black cursor-text`}
+        className="flex-1 p-4 overflow-y-auto font-mono text-sm bg-black cursor-text"
+        style={{ 
+          minHeight: 0,
+          overflowY: 'auto',
+          scrollBehavior: 'smooth'
+        }}
       >
         {commands.map((line, index) => (
           <div key={index} className="text-neon-green whitespace-pre-wrap">
