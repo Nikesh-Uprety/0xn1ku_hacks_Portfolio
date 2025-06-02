@@ -187,7 +187,7 @@ const Terminal = () => {
   }
 
   const terminalClasses = isMaximized 
-    ? "fixed inset-8 z-50 terminal-window rounded-lg overflow-hidden flex flex-col"
+    ? "fixed inset-4 z-50 terminal-window rounded-lg overflow-hidden flex flex-col"
     : "fixed bottom-4 right-4 w-96 h-80 z-50 terminal-window rounded-lg overflow-hidden flex flex-col";
 
   return (
@@ -209,7 +209,7 @@ const Terminal = () => {
             {isMaximized ? <Minimize className="w-2 h-2" /> : <Maximize className="w-2 h-2" />}
           </button>
           <button 
-            onClick={() => setIsVisible(false)}
+            onClick={() => setIsMinimized(true)}
             className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors flex items-center justify-center"
           >
             <X className="w-2 h-2" />
