@@ -9,6 +9,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<{ error: any }>;
   logout: () => Promise<void>;
   isAdmin: boolean;
+  supabaseConfigured: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -16,10 +17,16 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const supabaseConfigured = supabase !== null;
 
   const isAdmin = user?.email === 'admin@nikesh.dev' || user?.user_metadata?.role === 'admin';
 
   useEffect(() => {
+    if (!supabaseConfigured) {
+      setLoading(false);
+      return;
+    }
+
     // Get initial user
     getCurrentUser().then((user) => {
       setUser(user);
@@ -27,13 +34,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase!.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [supabaseConfigured]);
 
   const login = async (email: string, password: string) => {
     const { error } = await signIn(email, password);
@@ -45,7 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, isAdmin }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, isAdmin, supabaseConfigured }}>
       {children}
     </AuthContext.Provider>
   );

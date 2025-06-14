@@ -1,10 +1,13 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-key';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Only create client if we have real credentials
+const hasRealCredentials = supabaseUrl !== 'https://placeholder.supabase.co' && supabaseAnonKey !== 'placeholder-key';
+
+export const supabase = hasRealCredentials ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
 // Database types
 export interface Blog {
@@ -39,6 +42,10 @@ export interface Secret {
 
 // Auth functions
 export const signIn = async (email: string, password: string) => {
+  if (!supabase) {
+    return { data: null, error: { message: 'Supabase not configured. Please set up your Supabase credentials.' } };
+  }
+  
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -47,17 +54,29 @@ export const signIn = async (email: string, password: string) => {
 };
 
 export const signOut = async () => {
+  if (!supabase) {
+    return { error: { message: 'Supabase not configured' } };
+  }
+  
   const { error } = await supabase.auth.signOut();
   return { error };
 };
 
 export const getCurrentUser = async () => {
+  if (!supabase) {
+    return null;
+  }
+  
   const { data: { user } } = await supabase.auth.getUser();
   return user;
 };
 
 // Blog CRUD operations
 export const getBlogs = async () => {
+  if (!supabase) {
+    return { data: [], error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('blogs')
     .select('*')
@@ -66,6 +85,10 @@ export const getBlogs = async () => {
 };
 
 export const createBlog = async (blog: Omit<Blog, 'id' | 'created_at' | 'updated_at'>) => {
+  if (!supabase) {
+    return { data: null, error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('blogs')
     .insert([blog])
@@ -75,6 +98,10 @@ export const createBlog = async (blog: Omit<Blog, 'id' | 'created_at' | 'updated
 };
 
 export const updateBlog = async (id: string, updates: Partial<Blog>) => {
+  if (!supabase) {
+    return { data: null, error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('blogs')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -85,6 +112,10 @@ export const updateBlog = async (id: string, updates: Partial<Blog>) => {
 };
 
 export const deleteBlog = async (id: string) => {
+  if (!supabase) {
+    return { error: { message: 'Supabase not configured' } };
+  }
+  
   const { error } = await supabase
     .from('blogs')
     .delete()
@@ -94,6 +125,10 @@ export const deleteBlog = async (id: string) => {
 
 // Hack CRUD operations
 export const getHacks = async () => {
+  if (!supabase) {
+    return { data: [], error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('hacks')
     .select('*')
@@ -102,6 +137,10 @@ export const getHacks = async () => {
 };
 
 export const createHack = async (hack: Omit<Hack, 'id' | 'created_at' | 'updated_at'>) => {
+  if (!supabase) {
+    return { data: null, error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('hacks')
     .insert([hack])
@@ -111,6 +150,10 @@ export const createHack = async (hack: Omit<Hack, 'id' | 'created_at' | 'updated
 };
 
 export const updateHack = async (id: string, updates: Partial<Hack>) => {
+  if (!supabase) {
+    return { data: null, error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('hacks')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -121,6 +164,10 @@ export const updateHack = async (id: string, updates: Partial<Hack>) => {
 };
 
 export const deleteHack = async (id: string) => {
+  if (!supabase) {
+    return { error: { message: 'Supabase not configured' } };
+  }
+  
   const { error } = await supabase
     .from('hacks')
     .delete()
@@ -130,6 +177,10 @@ export const deleteHack = async (id: string) => {
 
 // Secret CRUD operations
 export const getSecrets = async () => {
+  if (!supabase) {
+    return { data: [], error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('secrets')
     .select('*')
@@ -138,6 +189,10 @@ export const getSecrets = async () => {
 };
 
 export const createSecret = async (secret: Omit<Secret, 'id' | 'created_at' | 'updated_at'>) => {
+  if (!supabase) {
+    return { data: null, error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('secrets')
     .insert([secret])
@@ -147,6 +202,10 @@ export const createSecret = async (secret: Omit<Secret, 'id' | 'created_at' | 'u
 };
 
 export const updateSecret = async (id: string, updates: Partial<Secret>) => {
+  if (!supabase) {
+    return { data: null, error: { message: 'Supabase not configured' } };
+  }
+  
   const { data, error } = await supabase
     .from('secrets')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -157,6 +216,10 @@ export const updateSecret = async (id: string, updates: Partial<Secret>) => {
 };
 
 export const deleteSecret = async (id: string) => {
+  if (!supabase) {
+    return { error: { message: 'Supabase not configured' } };
+  }
+  
   const { error } = await supabase
     .from('secrets')
     .delete()
