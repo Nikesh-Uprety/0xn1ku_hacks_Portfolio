@@ -23,10 +23,6 @@ const FloatingNav = () => {
     if (isHomePage) {
       // Show bruteforce simulation on home page
       setShowBruteforce(true);
-      setTimeout(() => {
-        setShowBruteforce(false);
-        setIsOpen(true);
-      }, 3000);
     } else {
       // Navigate to home on other pages
       navigate("/");
