@@ -54,29 +54,31 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
       <div className="font-mono text-sm space-y-1">
         {/* Terminal header */}
         <div className="text-neon-green mb-2">
-          <span>0xN1kU_H4X_!@kali:~$ dirb http://target.com ./wordlist.txt</span>
+          <span>~$ ffuf -u {'{URL}'} ./config.txt</span>
         </div>
         
         {results.map((result, index) => (
           <div key={index} className="flex items-center space-x-2 animate-fade-in">
+            <span className={`${result.color} font-bold`}>
+              {result.message}
+            </span>
             <span className="text-gray-400">
-              Testing:
+              {Array.from({ length: 4 }).map((_, i) => (
+                <span key={i}>.</span>
+              ))}
             </span>
             {result.clickable ? (
               <button
                 onClick={() => handleRouteClick(result.route)}
                 className="text-white hover:text-neon-green transition-colors cursor-pointer underline"
               >
-                http://target.com{result.route}
+                {result.route}
               </button>
             ) : (
               <span className="text-white">
-                http://target.com{result.route}
+                {result.route}
               </span>
             )}
-            <span className={`${result.color} font-bold`}>
-              ({result.status}) {result.message}
-            </span>
           </div>
         ))}
         
@@ -94,17 +96,6 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
                 </span>
               ))}
             </span>
-          </div>
-        )}
-
-        {scanComplete && (
-          <div className="mt-3 pt-2 border-t border-neon-green/30">
-            <div className="text-neon-green">
-              ---- Scanning complete ----
-            </div>
-            <div className="text-gray-400 text-xs mt-1">
-              Found {results.filter(r => r.status === 200).length} accessible directories
-            </div>
           </div>
         )}
       </div>
