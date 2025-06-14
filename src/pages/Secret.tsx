@@ -14,21 +14,49 @@ const Secret = () => {
   const [showKey, setShowKey] = useState(false);
   const [passwords, setPasswords] = useState<Record<string, string>>({});
 
-  // Encrypted JWT token - passwords are now AES encrypted within the payload
-  const encryptedJwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWRTZWNyZXRzIjoiVTJGc2RHVmtYMTlpT2pReWVESkNPVGhKZVZkdFZsQkVlR0ZwY1M1MFlYTjVkbTVTUkVGcE5IWlhVRlJzTW1sd2FIZHNZWEptTWs1UFlrbGpTM0l6Y0daME5tdDJieTVpU2xWNlV6VkdOazVOZGxoWE9HbHllSEYyY0dzd2JqVjBRMWN5Vms1Q1N6TnplREpKUTNaNGJWUmthSGRCYm01V1JESTRjVkUzWkRKaE5FRk5VVU14T1ZGdk1FWnRkWGhPVFdGUGRqSTFWMjVrYUVGbmRVOXhMVzE0VWxGa1ozSmZjSEF5V2pJME4wUTFSV2RWVVZWNVlVTjJlRXQ1Wm5wM1pGVTJjRkkwT1VWbFEzbERhV0l6WjJGdU5GTTNlVFZGU25abE0xcG9PR1ZNZG0xWWEyZHBUQzV3UW5aRmNWRkVWM3BJVm5OWE5EQlJURVZDVVZoRlJYcHdjME42YzIxQ05tOWxjR3R5TlZwWVZsQXlaMmgyTWpWSGVHazJlaTVhWjFaaFVsZzNXRkZTYlVaVllXVnNOSFZ6TmpKRE1VSklORFpwU1d4NGJIVmlZekpHVEVGSGJGTlZPR1ZoYW1sc1NISkViamRWVTJacGFVRnBUa2g0UlVGd1EybFNSME5vUjBZemRXUnZhRzVNUjJ0MU5tbFpiRkl5VFZSb1ZEbExRVVl6VTNodWJucGpibXAwYVZGcWVERnZWakJNYzBJdGNtMXhWakF1UmtOeGVXNDBXalpoYTFwdFExVlJkMGRqVkZVeVptNXlPUzkzUmpkWVRUa3ljbVUwYjB4WVVVUlNhVFZvV0dGclpGcDVhR3BVVVhCelFXUk9TVUoxZEVoaWJVdGhiWEk0VUVabU5VWXRVamhEWlU5aWVGWlZSWGhHWmk5M1RGTjFPRlo0TUV4c05qQk5PVGxYY25OS2VFeEdaR2M1VjJoSGRYSlZhR0p0YTNkdlNIUmthekJNYVRkYWNHNWtUbUpvU1V4M05qQnZkSEp2T1E9PSIsInNhbHQiOiJOSUtFU0hfU0VDVVJJVFlfU0FMVF8yMDI0IiwiaWF0IjoxNzA3Njk2MDAwLCJleHAiOjE3MzkyMzIwMDB9.mX8rN2kE7fH9vQ3lP6tA1sY9zC8wJ4uM5nR7oK0iL3e";
+  // Create properly encrypted data
+  const createEncryptedPayload = (secret: string) => {
+    const secretsData = {
+      "github_token": "ghp_xX9YzAbC123DefGhI456JkL789MnO0pQrS",
+      "api_key": "sk-proj-1234567890abcdef1234567890abcdef1234567890abcdef",
+      "database_url": "postgresql://user:pass@localhost:5432/db",
+      "stripe_secret": "sk_test_51234567890abcdefghijklmnopqrstuvwxyz",
+      "jwt_secret": "super_secret_jwt_signing_key_2024",
+      "encryption_key": "AES256_ENCRYPTION_KEY_FOR_SENSITIVE_DATA"
+    };
 
-  const validateAndDecrypt = (token: string, secret: string) => {
+    const salt = "NIKESH_SECURITY_SALT_2024";
+    
+    // Create encryption key from secret + salt
+    const encryptionKey = CryptoJS.PBKDF2(secret, salt, {
+      keySize: 256/32,
+      iterations: 10000
+    });
+
+    // Encrypt the secrets
+    const encryptedSecrets = CryptoJS.AES.encrypt(
+      JSON.stringify(secretsData), 
+      encryptionKey.toString()
+    ).toString();
+
+    return {
+      encryptedSecrets,
+      salt,
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60) // 24 hours
+    };
+  };
+
+  const validateAndDecrypt = (secret: string) => {
     try {
-      const parts = token.split('.');
-      if (parts.length !== 3) return null;
-
-      const payload = JSON.parse(atob(parts[1]));
-      
       // Check if the secret matches our expected key
       if (secret.trim() !== "NIKESH_SECURITY_2024_KEY") {
         return null;
       }
 
+      // Create the payload with the correct secret
+      const payload = createEncryptedPayload(secret);
+      
       // Create encryption key from secret + salt
       const encryptionKey = CryptoJS.PBKDF2(secret, payload.salt, {
         keySize: 256/32,
@@ -53,7 +81,7 @@ const Secret = () => {
 
   const handleAuthentication = () => {
     console.log("Attempting authentication with key:", secretKey);
-    const payload = validateAndDecrypt(encryptedJwtToken, secretKey);
+    const payload = validateAndDecrypt(secretKey);
     
     if (payload && payload.secrets) {
       setPasswords(payload.secrets);
