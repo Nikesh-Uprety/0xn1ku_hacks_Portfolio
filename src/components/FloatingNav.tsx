@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DecodingText } from "./DecodingText";
 import { BruteforceSimulation } from "./BruteforceSimulation";
@@ -19,6 +18,15 @@ const FloatingNav = () => {
 
   const isHomePage = location.pathname === "/";
 
+  // Automatically show routes when not on home page
+  useEffect(() => {
+    if (!isHomePage) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [isHomePage]);
+
   const handleButtonClick = () => {
     if (isHomePage) {
       // Toggle bruteforce simulation on home page
@@ -31,7 +39,10 @@ const FloatingNav = () => {
 
   const handleRouteClick = (path: string) => {
     navigate(path);
-    setIsOpen(false);
+    // Don't close the dropdown on other pages, keep it open for easy navigation
+    if (isHomePage) {
+      setIsOpen(false);
+    }
   };
 
   const handleBruteforceComplete = () => {
