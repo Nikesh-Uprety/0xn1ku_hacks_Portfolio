@@ -54,7 +54,7 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
       <div className="font-mono text-sm space-y-1 text-left">
         {/* Terminal header */}
         <div className="text-neon-green mb-2">
-          <span>~$ ffuf -u {'{URL}'} ./config.txt</span>
+          <span>~$ ffuf -u url.txt/api/FUZZ -w ./config.txt</span>
         </div>
         
         {results.map((result, index) => (
