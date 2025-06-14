@@ -15,13 +15,14 @@ export const DecodingText = ({ baseText, isActive }: DecodingTextProps) => {
   };
 
   const generateGlitchedText = (originalText: string) => {
-    // Split the text into stable part and glitchable part
-    const stablePart = './api/';
-    const glitchablePart = 'abcdef'; // Fixed 6 letters
-    
+    // Handle different base texts
     if (originalText === './api/FUZZ') {
-      const glitchedPart = Array.from({ length: 6 }, () => generateRandomChar()).join('');
-      return stablePart + glitchedPart;
+      const stablePart = './api/';
+      const glitchablePart = Array.from({ length: 6 }, () => generateRandomChar()).join('');
+      return stablePart + glitchablePart;
+    } else if (originalText === 'FUZZER') {
+      // For the terminal header, glitch all 6 letters
+      return Array.from({ length: 6 }, () => generateRandomChar()).join('');
     }
     
     return originalText;
