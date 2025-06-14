@@ -21,8 +21,8 @@ const FloatingNav = () => {
 
   const handleButtonClick = () => {
     if (isHomePage) {
-      // Show bruteforce simulation on home page
-      setShowBruteforce(true);
+      // Toggle bruteforce simulation on home page
+      setShowBruteforce(!showBruteforce);
     } else {
       // Navigate to home on other pages
       navigate("/");
@@ -71,7 +71,6 @@ const FloatingNav = () => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className="relative bg-cyber-dark border border-neon-green/50 rounded-lg px-4 py-2 hover:border-neon-green hover:bg-neon-green/10 transition-all duration-300 animate-float"
-        disabled={showBruteforce}
       >
         {isHomePage ? (
           <DecodingText baseText="./api/FUZZ" isActive={isHovered || isOpen || showBruteforce} />
