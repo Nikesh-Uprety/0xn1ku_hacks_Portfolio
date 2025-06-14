@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DecodingText } from "./DecodingText";
@@ -11,21 +12,13 @@ const FloatingNav = () => {
   const location = useLocation();
 
   const routes = [
+    { path: "/", label: "/home", color: "text-neon-green" },
     { path: "/blogs", label: "/blogs", color: "text-neon-green" },
     { path: "/hacks", label: "/hacks", color: "text-neon-green" },
     { path: "/secret", label: "/secret", color: "text-red-500" },
   ];
 
   const isHomePage = location.pathname === "/";
-
-  // Automatically show routes when not on home page
-  useEffect(() => {
-    if (!isHomePage) {
-      setIsOpen(true);
-    } else {
-      setIsOpen(false);
-    }
-  }, [isHomePage]);
 
   const handleButtonClick = () => {
     if (isHomePage) {
@@ -39,10 +32,6 @@ const FloatingNav = () => {
 
   const handleRouteClick = (path: string) => {
     navigate(path);
-    // Don't close the dropdown on other pages, keep it open for easy navigation
-    if (isHomePage) {
-      setIsOpen(false);
-    }
   };
 
   const handleBruteforceComplete = () => {
@@ -59,24 +48,24 @@ const FloatingNav = () => {
         </div>
       )}
 
-      {/* Dropdown Menu */}
-      {isOpen && !showBruteforce && (
-        <div className="absolute top-16 right-0 mb-2 min-w-[200px]">
-          <div className="bg-cyber-dark border border-neon-green/50 rounded-lg p-4 space-y-2 animate-fade-in">
-            {routes.map((route) => (
+      {/* Route Buttons for non-home pages */}
+      {!isHomePage && !showBruteforce && (
+        <div className="flex flex-col space-y-2 mb-2">
+          {routes
+            .filter(route => route.path !== location.pathname)
+            .map((route) => (
               <button
                 key={route.path}
                 onClick={() => handleRouteClick(route.path)}
-                className={`w-full text-left p-2 rounded hover:bg-neon-green/10 transition-colors font-mono ${route.color}`}
+                className="bg-cyber-dark border border-neon-green/50 rounded-lg px-4 py-2 hover:border-neon-green hover:bg-neon-green/10 transition-all duration-300 animate-float"
               >
-                {route.label}
+                <span className={`font-mono ${route.color}`}>{route.label}</span>
               </button>
             ))}
-          </div>
         </div>
       )}
 
-      {/* Floating Button */}
+      {/* Main Floating Button */}
       <button
         onClick={handleButtonClick}
         onMouseEnter={() => setIsHovered(true)}
