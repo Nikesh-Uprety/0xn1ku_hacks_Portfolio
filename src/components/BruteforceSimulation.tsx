@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DecodingText } from './DecodingText';
 
 interface BruteforceSimulationProps {
   onComplete: () => void;
@@ -51,13 +50,11 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
   };
 
   return (
-    <div className="fixed top-12 right-8 bg-black border border-neon-green/50 rounded-lg p-3 w-80 animate-fade-in terminal-scroll z-40">
+    <div className="fixed top-32 right-8 bg-black border border-neon-green/50 rounded-lg p-3 w-80 animate-fade-in terminal-scroll z-40">
       <div className="font-mono text-sm space-y-1 text-left">
         {/* Terminal header */}
         <div className="text-neon-green mb-2">
-          <span>~$ ffuf -u url.txt/api/</span>
-          <DecodingText baseText="FUZZER" isActive={isScanning} />
-          <span> -w ./config.txt</span>
+          <span>~$ ffuf -u url.txt/api/FUZZ -w ./config.txt</span>
         </div>
         
         {results.map((result, index) => (
@@ -66,7 +63,7 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
               {result.message}
             </span>
             <span className="text-gray-400 flex-1 text-center">
-              {Array.from({ length: 20 }).map((_, i) => (
+              {Array.from({ length: 12 }).map((_, i) => (
                 <span key={i}>.</span>
               ))}
             </span>
