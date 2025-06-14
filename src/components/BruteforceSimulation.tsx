@@ -23,6 +23,7 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
 
   const scanResults: ScanResult[] = [
     { status: 200, route: "/blogs", message: "200 OK", color: "text-neon-green", clickable: true },
+    { status: 200, route: "/tools", message: "200 OK", color: "text-neon-green", clickable: true },
     { status: 200, route: "/hacks", message: "200 OK", color: "text-neon-green", clickable: true },
     { status: 200, route: "/secret", message: "200 OK", color: "text-neon-green", clickable: true },
     { status: 404, route: "/admin/passwords.txt", message: "404 Not Found", color: "text-red-500", clickable: false },

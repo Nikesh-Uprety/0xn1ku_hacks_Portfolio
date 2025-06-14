@@ -13,6 +13,7 @@ const FloatingNav = () => {
 
   const routes = [
     { path: "/blogs", label: "/blogs", color: "text-neon-green" },
+    { path: "/tools", label: "/tools", color: "text-neon-green" },
     { path: "/hacks", label: "/hacks", color: "text-neon-green" },
     { path: "/secret", label: "/secret", color: "text-red-500" },
   ];
