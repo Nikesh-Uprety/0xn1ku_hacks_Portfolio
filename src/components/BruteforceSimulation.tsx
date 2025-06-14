@@ -50,7 +50,7 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
   };
 
   return (
-    <div className="bg-black border border-neon-green/50 rounded-lg p-3 w-80 ml-auto mr-4 animate-fade-in terminal-scroll">
+    <div className="bg-black border border-neon-green/50 rounded-lg p-3 w-72 ml-auto mr-8 animate-fade-in terminal-scroll">
       <div className="font-mono text-sm space-y-1 text-left">
         {/* Terminal header */}
         <div className="text-neon-green mb-2">
