@@ -51,10 +51,6 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
   return (
     <div className="bg-cyber-dark border border-neon-green/50 rounded-lg p-4 min-w-[300px] animate-fade-in">
       <div className="font-mono text-sm space-y-2">
-        <div className="text-neon-green border-b border-neon-green/30 pb-2 mb-3">
-          <span className="animate-pulse">API ENDPOINT DISCOVERY</span>
-        </div>
-        
         {results.map((result, index) => (
           <div key={index} className="flex items-center space-x-2 animate-fade-in">
             <span className={`${result.color} font-bold`}>
@@ -96,12 +92,6 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
                 </span>
               ))}
             </span>
-          </div>
-        )}
-        
-        {scanComplete && (
-          <div className="text-neon-green pt-2 border-t border-neon-green/30 mt-3">
-            <span className="animate-pulse">Scan Complete - Click routes to navigate</span>
           </div>
         )}
       </div>
