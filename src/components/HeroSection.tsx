@@ -33,7 +33,7 @@ export const HeroSection = () => {
                 </div>
               )}
               <img
-                src="/lovable-uploads/full_final_banner.png"
+                src="/lovable-uploads/dcf27ca5-65bd-4f90-8ae9-cd9d1d0f0efc.png"
                 alt="Nikesh Uprety"
                 className={`w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 object-cover rounded-lg neon-border transition-all duration-300 ${
                   isGlitching ? "opacity-50" : ""

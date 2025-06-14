@@ -187,27 +187,33 @@
     transform: translateY(-2px);
   }
 
-  /* Floating Nav Animations */
+  /* Enhanced Floating Nav Animations */
   .animate-fade-in {
     animation: fadeIn 0.3s ease-out;
   }
 
   .animate-float {
-    animation: float 4s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite;
   }
 
   @keyframes float {
     0%, 100% {
       transform: translate(0, 0);
     }
-    25% {
-      transform: translate(3px, -3px);
+    16.66% {
+      transform: translate(2px, -3px);
+    }
+    33.33% {
+      transform: translate(-2px, -4px);
     }
     50% {
-      transform: translate(-2px, -5px);
-    }
-    75% {
       transform: translate(-3px, 2px);
+    }
+    66.66% {
+      transform: translate(1px, 3px);
+    }
+    83.33% {
+      transform: translate(3px, -1px);
     }
   }
 

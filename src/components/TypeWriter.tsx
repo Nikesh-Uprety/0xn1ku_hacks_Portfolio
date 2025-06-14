@@ -49,9 +49,6 @@ export const TypeWriter = ({ texts, speed = 50, delay = 1000, repeatInterval = 1
       const timeout = setTimeout(() => {
         setDisplayedTexts(prev => {
           const newTexts = [...prev];
-          if (!newTexts[currentTextIndex]) {
-            newTexts[currentTextIndex] = '';
-          }
           newTexts[currentTextIndex] = currentText.slice(0, currentCharIndex + 1);
           return newTexts;
         });
@@ -77,7 +74,7 @@ export const TypeWriter = ({ texts, speed = 50, delay = 1000, repeatInterval = 1
           <span className="text-neon-blue">{">"}</span> {text}
         </p>
       ))}
-      {currentTextIndex < texts.length && isTyping && (
+      {isTyping && currentTextIndex < texts.length && (
         <p className="text-gray-300">
           <span className="text-neon-blue">{">"}</span> {displayedTexts[currentTextIndex] || ''}
           <span className="animate-blink ml-1">_</span>
