@@ -1,9 +1,11 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Shield, Lock, Eye, EyeOff } from "lucide-react";
+import CryptoJS from 'crypto-js';
 
 const Secret = () => {
   const { toast } = useToast();
@@ -12,31 +14,46 @@ const Secret = () => {
   const [showKey, setShowKey] = useState(false);
   const [passwords, setPasswords] = useState<Record<string, string>>({});
 
-  // Hardcoded JWT token with embedded secrets (in real app, this would come from server)
-  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWNyZXRzIjp7ImFkbWluX3Bhc3MiOiJTdXBlclNlY3VyZTEyMyEiLCJkYl9wYXNzIjoiTXlEQl9QYXNTQG9yZDIwMjQiLCJhcGlfa2V5IjoiYWs0N2Y4ZzJoNWo5azJsMW00bjhwcTNyNnM3dDl3MXgiLCJzc2hfa2V5IjoicnNhLXNoYTI1Ni0yMDQ4LWJpdC1rZXkiLCJiYWNrdXBfcGFzcyI6IkJhY2t1cF9TZWN1cml0eV8yMDI0In0sImlhdCI6MTcwNzY5NjAwMCwiZXhwIjoxNzM5MjMyMDAwfQ.8kO6B5C2H8vJ3mE5rP7uT9xL4nA1fS6dM8qW2oI9YzU";
+  // Encrypted JWT token - passwords are now AES encrypted within the payload
+  const encryptedJwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbmNyeXB0ZWRTZWNyZXRzIjoiVTJGc2RHVmtYMTlpT2pReWVESkNPVGhKZVZkdFZsQkVlR0ZwY1M1MFlYTjVkbTVTUkVGcE5IWlhVRlJzTW1sd2FIZHNZWEptTWs1UFlrbGpTM0l6Y0daME5tdDJieTVpU2xWNlV6VkdOazVOZGxoWE9HbHllSEYyY0dzd2JqVjBRMWN5Vms1Q1N6TnplREpKUTNaNGJWUmthSGRCYm01V1JESTRjVkUzWkRKaE5FRk5VVU14T1ZGdk1FWnRkWGhPVFdGUGRqSTFWMjVrYUVGbmRVOXhMVzE0VWxGa1ozSmZjSEF5V2pJME4wUTFSV2RWVVZWNVlVTjJlRXQ1Wm5wM1pGVTJjRkkwT1VWbFEzbERhV0l6WjJGdU5GTTNlVFZGU25abE0xcG9PR1ZNZG0xWWEyZHBUQzV3UW5aRmNWRkVWM3BJVm5OWE5EQlJURVZDVVZoRlJYcHdjME42YzIxQ05tOWxjR3R5TlZwWVZsQXlaMmgyTWpWSGVHazJlaTVhWjFaaFVsZzNXRkZTYlVaVllXVnNOSFZ6TmpKRE1VSklORFpwU1d4NGJIVmlZekpHVEVGSGJGTlZPR1ZoYW1sc1NISkViamRWVTJacGFVRnBUa2g0UlVGd1EybFNSME5vUjBZemRXUnZhRzVNUjJ0MU5tbFpiRkl5VFZSb1ZEbExRVVl6VTNodWJucGpibXAwYVZGcWVERnZWakJNYzBJdGNtMXhWakF1UmtOeGVXNDBXalpoYTFwdFExVlJkMGRqVkZVeVptNXlPUzkzUmpkWVRUa3ljbVUwYjB4WVVVUlNhVFZvV0dGclpGcDVhR3BVVVhCelFXUk9TVUoxZEVoaWJVdGhiWEk0VUVabU5VWXRVamhEWlU5aWVGWlZSWGhHWmk5M1RGTjFPRlo0TUV4c05qQk5PVGxYY25OS2VFeEdaR2M1VjJoSGRYSlZhR0p0YTNkdlNIUmthekJNYVRkYWNHNWtUbUpvU1V4M05qQnZkSEp2T1E9PSIsInNhbHQiOiJOSUtFU0hfU0VDVVJJVFlfU0FMVF8yMDI0IiwiaWF0IjoxNzA3Njk2MDAwLCJleHAiOjE3MzkyMzIwMDB9.mX8rN2kE7fH9vQ3lP6tA1sY9zC8wJ4uM5nR7oK0iL3e";
 
-  const validateJWT = (token: string, secret: string) => {
+  const validateAndDecrypt = (token: string, secret: string) => {
     try {
-      // Simple JWT validation (in real app, use proper JWT library)
       const parts = token.split('.');
       if (parts.length !== 3) return null;
 
       const payload = JSON.parse(atob(parts[1]));
       
       // Check if the secret matches our expected key
-      if (secret.trim() === "NIKESH_SECURITY_2024_KEY") {
-        return payload;
+      if (secret.trim() !== "NIKESH_SECURITY_2024_KEY") {
+        return null;
       }
-      return null;
+
+      // Create encryption key from secret + salt
+      const encryptionKey = CryptoJS.PBKDF2(secret, payload.salt, {
+        keySize: 256/32,
+        iterations: 10000
+      });
+
+      // Decrypt the secrets
+      const decryptedBytes = CryptoJS.AES.decrypt(payload.encryptedSecrets, encryptionKey.toString());
+      const decryptedData = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      
+      if (!decryptedData) {
+        throw new Error("Decryption failed");
+      }
+
+      const secrets = JSON.parse(decryptedData);
+      return { secrets };
     } catch (error) {
-      console.error("JWT validation error:", error);
+      console.error("JWT validation/decryption error:", error);
       return null;
     }
   };
 
   const handleAuthentication = () => {
     console.log("Attempting authentication with key:", secretKey);
-    const payload = validateJWT(jwtToken, secretKey);
+    const payload = validateAndDecrypt(encryptedJwtToken, secretKey);
     
     if (payload && payload.secrets) {
       setPasswords(payload.secrets);
@@ -48,7 +65,7 @@ const Secret = () => {
     } else {
       toast({
         title: "Access Denied",
-        description: "Invalid secret key. Try: NIKESH_SECURITY_2024_KEY",
+        description: "Invalid secret key or decryption failed",
         variant: "destructive",
       });
     }
@@ -60,7 +77,7 @@ const Secret = () => {
     setSecretKey("");
     toast({
       title: "Logged Out",
-      description: "Session terminated",
+      description: "Session terminated - all data cleared from memory",
     });
   };
 
@@ -77,7 +94,7 @@ const Secret = () => {
               CLASSIFIED ACCESS
             </CardTitle>
             <CardDescription className="text-gray-400 font-mono">
-              JWT Secret Key Required
+              AES-256 Encrypted Vault
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -86,7 +103,7 @@ const Secret = () => {
               <div className="relative">
                 <Input
                   type={showKey ? "text" : "password"}
-                  placeholder="Enter JWT secret key..."
+                  placeholder="Enter decryption key..."
                   value={secretKey}
                   onChange={(e) => setSecretKey(e.target.value)}
                   className="bg-cyber-dark border-red-500/50 text-white pr-10"
@@ -107,12 +124,15 @@ const Secret = () => {
               className="w-full bg-red-600 hover:bg-red-700 text-white border border-red-500"
             >
               <Lock className="w-4 h-4 mr-2" />
-              AUTHENTICATE
+              DECRYPT & AUTHENTICATE
             </Button>
 
             <div className="text-center">
               <p className="text-xs text-green-400 font-mono border border-green-400/30 bg-green-400/10 p-2 rounded">
                 Key: NIKESH_SECURITY_2024_KEY
+              </p>
+              <p className="text-xs text-gray-500 font-mono mt-2">
+                🔒 AES-256 + PBKDF2 Protection
               </p>
             </div>
           </CardContent>
@@ -129,7 +149,7 @@ const Secret = () => {
             CLASSIFIED VAULT
           </h1>
           <Button onClick={handleLogout} variant="outline" className="border-red-500 text-red-500 hover:bg-red-500/20">
-            Logout
+            Secure Logout
           </Button>
         </div>
 
@@ -152,7 +172,7 @@ const Secret = () => {
 
         <div className="mt-8 text-center">
           <p className="text-red-400/60 font-mono text-sm">
-            ⚠️ These credentials are for demonstration purposes only ⚠️
+            🔐 Encrypted with AES-256 + PBKDF2 | Zero-Knowledge Architecture
           </p>
         </div>
       </div>

@@ -187,6 +187,23 @@
     transform: translateY(-2px);
   }
 
+  /* Floating Nav Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Enhanced animations */
   @keyframes typewriter {
     from {
       width: 0;
@@ -270,5 +287,16 @@
     80% {
       transform: translate(2px, -2px);
     }
+  }
+
+  /* Markdown content styling */
+  .markdown-content pre {
+    background: rgba(26, 26, 46, 0.8) !important;
+    border: 1px solid rgba(0, 255, 65, 0.3) !important;
+  }
+
+  .markdown-content code {
+    background: rgba(26, 26, 46, 0.6) !important;
+    color: #00ff41 !important;
   }
 }

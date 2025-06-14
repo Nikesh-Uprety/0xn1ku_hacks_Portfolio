@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import { Calendar, User, ChevronDown, ChevronUp } from "lucide-react";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface BlogPost {
   id: number;
@@ -151,8 +153,32 @@ const Blogs = () => {
                   
                   {expandedPost === post.id && (
                     <div className="prose prose-invert max-w-none">
-                      <div className="whitespace-pre-wrap text-gray-300 font-mono text-sm leading-relaxed">
-                        {post.content}
+                      <div className="markdown-content text-gray-300">
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            h1: ({ children }) => <h1 className="text-2xl font-bold text-neon-green mb-4">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-xl font-bold text-neon-green mb-3 mt-6">{children}</h2>,
+                            h3: ({ children }) => <h3 className="text-lg font-bold text-neon-green mb-2 mt-4">{children}</h3>,
+                            p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
+                            code: ({ children, className }) => {
+                              const isBlock = className?.includes('language-');
+                              return isBlock ? (
+                                <pre className="bg-cyber-dark border border-neon-green/30 rounded p-4 overflow-x-auto mb-4">
+                                  <code className="text-neon-green font-mono text-sm">{children}</code>
+                                </pre>
+                              ) : (
+                                <code className="bg-cyber-dark text-neon-green px-1 py-0.5 rounded font-mono text-sm">{children}</code>
+                              );
+                            },
+                            ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
+                            ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
+                            li: ({ children }) => <li className="text-gray-300">{children}</li>,
+                            strong: ({ children }) => <strong className="text-neon-green font-bold">{children}</strong>,
+                          }}
+                        >
+                          {post.content}
+                        </ReactMarkdown>
                       </div>
                     </div>
                   )}
