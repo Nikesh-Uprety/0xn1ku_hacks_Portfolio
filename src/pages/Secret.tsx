@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +13,7 @@ const Secret = () => {
   const [passwords, setPasswords] = useState<Record<string, string>>({});
 
   // Hardcoded JWT token with embedded secrets (in real app, this would come from server)
-  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWNyZXRzIjp7ImFkbWluX3Bhc3MiOiJTdXBlclNlY3VyZTEyMyEiLCJkYl9wYXNzIjoiTXlEQl9QYXNTQG9yZDIwMjQiLCJhcGlfa2V5IjoiYWs0N2Y4ZzJoNWo5azJsMW00bjhwcTNyNnM3dDl3MXgiLCJzc2hfa2V5IjoicnNhLXNoYTI1Ni0yMDQ4LWJpdC1rZXkiLCJiYWNrdXBfcGFzcyI6IkJhY2t1cF9TZWN1cml0eV8yMDI0In0sImlhdCI6MTcwNzY5NjAwMCwiZXhwIjoxNzM5MjMyMDAwfQ";
+  const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWNyZXRzIjp7ImFkbWluX3Bhc3MiOiJTdXBlclNlY3VyZTEyMyEiLCJkYl9wYXNzIjoiTXlEQl9QYXNTQG9yZDIwMjQiLCJhcGlfa2V5IjoiYWs0N2Y4ZzJoNWo5azJsMW00bjhwcTNyNnM3dDl3MXgiLCJzc2hfa2V5IjoicnNhLXNoYTI1Ni0yMDQ4LWJpdC1rZXkiLCJiYWNrdXBfcGFzcyI6IkJhY2t1cF9TZWN1cml0eV8yMDI0In0sImlhdCI6MTcwNzY5NjAwMCwiZXhwIjoxNzM5MjMyMDAwfQ.8kO6B5C2H8vJ3mE5rP7uT9xL4nA1fS6dM8qW2oI9YzU";
 
   const validateJWT = (token: string, secret: string) => {
     try {
@@ -24,17 +23,19 @@ const Secret = () => {
 
       const payload = JSON.parse(atob(parts[1]));
       
-      // Check if the secret matches our expected format
-      if (secret === "NIKESH_SECURITY_2024_KEY") {
+      // Check if the secret matches our expected key
+      if (secret.trim() === "NIKESH_SECURITY_2024_KEY") {
         return payload;
       }
       return null;
     } catch (error) {
+      console.error("JWT validation error:", error);
       return null;
     }
   };
 
   const handleAuthentication = () => {
+    console.log("Attempting authentication with key:", secretKey);
     const payload = validateJWT(jwtToken, secretKey);
     
     if (payload && payload.secrets) {
@@ -47,7 +48,7 @@ const Secret = () => {
     } else {
       toast({
         title: "Access Denied",
-        description: "Invalid secret key",
+        description: "Invalid secret key. Try: NIKESH_SECURITY_2024_KEY",
         variant: "destructive",
       });
     }
@@ -110,8 +111,8 @@ const Secret = () => {
             </Button>
 
             <div className="text-center">
-              <p className="text-xs text-gray-500 font-mono">
-                Hint: NIKESH_SECURITY_2024_KEY
+              <p className="text-xs text-green-400 font-mono border border-green-400/30 bg-green-400/10 p-2 rounded">
+                Key: NIKESH_SECURITY_2024_KEY
               </p>
             </div>
           </CardContent>
