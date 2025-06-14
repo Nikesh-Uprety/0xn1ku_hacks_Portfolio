@@ -12,7 +12,6 @@ const FloatingNav = () => {
   const location = useLocation();
 
   const routes = [
-    { path: "/", label: "/home", color: "text-neon-green" },
     { path: "/blogs", label: "/blogs", color: "text-neon-green" },
     { path: "/hacks", label: "/hacks", color: "text-neon-green" },
     { path: "/secret", label: "/secret", color: "text-red-500" },
