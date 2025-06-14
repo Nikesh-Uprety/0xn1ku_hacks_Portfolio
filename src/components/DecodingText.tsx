@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 
 interface DecodingTextProps {
@@ -7,34 +6,43 @@ interface DecodingTextProps {
 }
 
 export const DecodingText = ({ baseText, isActive }: DecodingTextProps) => {
-  const [decodingChars, setDecodingChars] = useState('');
+  const [displayText, setDisplayText] = useState(baseText);
 
   const generateRandomChar = () => {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ%123456789101112131415161718192020';
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*(){}[]|\\:";\'<>?,./';
     return chars[Math.floor(Math.random() * chars.length)];
   };
 
-  const generateRandomString = () => {
-    return Array.from({ length: 4 }, () => generateRandomChar()).join('');
+  const generateGlitchedText = (originalText: string) => {
+    return originalText
+      .split('')
+      .map(char => {
+        // Keep certain characters stable (like ./: to maintain structure)
+        if (char === '.' || char === '/' || char === ':') {
+          return char;
+        }
+        // Randomly glitch other characters
+        return Math.random() < 0.3 ? generateRandomChar() : char;
+      })
+      .join('');
   };
 
   useEffect(() => {
     if (!isActive) {
-      setDecodingChars('');
+      setDisplayText(baseText);
       return;
     }
 
     const interval = setInterval(() => {
-      setDecodingChars(generateRandomString());
+      setDisplayText(generateGlitchedText(baseText));
     }, 100);
 
     return () => clearInterval(interval);
-  }, [isActive]);
+  }, [isActive, baseText]);
 
   return (
     <span className="font-mono text-neon-green">
-      {baseText}
-      {isActive && <span className="animate-pulse">{decodingChars}</span>}
+      {displayText}
     </span>
   );
 };
