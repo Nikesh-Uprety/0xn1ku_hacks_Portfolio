@@ -10,22 +10,18 @@ export const DecodingText = ({ baseText, isActive }: DecodingTextProps) => {
   const [displayText, setDisplayText] = useState(baseText);
 
   const generateRandomChar = () => {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*(){}[]|\\:";\'<>?,./';
+    const chars = 'abcdefghijklmnopqrstuvwxyz';
     return chars[Math.floor(Math.random() * chars.length)];
   };
 
   const generateGlitchedText = (originalText: string) => {
     // Split the text into stable part and glitchable part
     const stablePart = './api/';
-    const glitchablePart = 'FUZZ';
+    const glitchablePart = 'abcdef'; // Fixed 6 letters
     
     if (originalText === './api/FUZZ') {
-      const glitchedFuzz = glitchablePart
-        .split('')
-        .map(() => generateRandomChar())
-        .join('');
-      
-      return stablePart + glitchedFuzz;
+      const glitchedPart = Array.from({ length: 6 }, () => generateRandomChar()).join('');
+      return stablePart + glitchedPart;
     }
     
     return originalText;
