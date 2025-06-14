@@ -28,6 +28,7 @@ const App = () => (
               <Route path="/tools" element={<Tools />} />
               <Route path="/secret" element={<Secret />} />
               <Route path="/nexus" element={<Nexus />} />
+              <Route path="/hacks" element={<Nexus />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

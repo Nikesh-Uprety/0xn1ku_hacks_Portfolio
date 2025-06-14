@@ -14,6 +14,7 @@ export const TypeWriter = ({ texts, speed = 50, delay = 1000, repeatInterval = 1
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [key, setKey] = useState(0);
 
   // Reset function to restart the animation
   const resetAnimation = () => {
@@ -22,6 +23,7 @@ export const TypeWriter = ({ texts, speed = 50, delay = 1000, repeatInterval = 1
     setCurrentCharIndex(0);
     setIsTyping(true);
     setIsCompleted(false);
+    setKey(prev => prev + 1);
   };
 
   useEffect(() => {
@@ -66,12 +68,12 @@ export const TypeWriter = ({ texts, speed = 50, delay = 1000, repeatInterval = 1
 
       return () => clearTimeout(timeout);
     }
-  }, [currentTextIndex, currentCharIndex, texts, speed, delay]);
+  }, [currentTextIndex, currentCharIndex, texts, speed, delay, key]);
 
   return (
-    <div className="font-mono text-base sm:text-lg space-y-2">
+    <div className="font-mono text-base sm:text-lg space-y-2" key={key}>
       {displayedTexts.map((text, index) => (
-        <p key={index} className="text-gray-300">
+        <p key={`${key}-${index}`} className="text-gray-300">
           <span className="text-neon-blue">{">"}</span> {text}
         </p>
       ))}
