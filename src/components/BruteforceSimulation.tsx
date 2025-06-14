@@ -50,7 +50,7 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
   };
 
   return (
-    <div className="bg-black border border-neon-green/50 rounded-lg p-3 w-72 ml-auto mr-8 animate-fade-in terminal-scroll">
+    <div className="fixed bottom-4 right-4 bg-black border border-neon-green/50 rounded-lg p-3 w-80 animate-fade-in terminal-scroll" style={{ marginBottom: '21rem' }}>
       <div className="font-mono text-sm space-y-1 text-left">
         {/* Terminal header */}
         <div className="text-neon-green mb-2">
@@ -62,20 +62,20 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
             <span className={`${result.color} font-bold whitespace-nowrap`}>
               {result.message}
             </span>
-            <span className="text-gray-400 flex-shrink-0">
-              {Array.from({ length: 4 }).map((_, i) => (
+            <span className="text-gray-400 flex-1 text-center">
+              {Array.from({ length: 12 }).map((_, i) => (
                 <span key={i}>.</span>
               ))}
             </span>
             {result.clickable ? (
               <button
                 onClick={() => handleRouteClick(result.route)}
-                className="text-white hover:text-neon-green transition-colors cursor-pointer underline text-left"
+                className="text-white hover:text-neon-green transition-colors cursor-pointer underline text-left whitespace-nowrap"
               >
                 {result.route}
               </button>
             ) : (
-              <span className="text-white text-left">
+              <span className="text-white text-left whitespace-nowrap">
                 {result.route}
               </span>
             )}
