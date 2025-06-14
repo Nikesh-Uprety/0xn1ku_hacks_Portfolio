@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface BruteforceSimulationProps {
   onComplete: () => void;
@@ -10,18 +11,21 @@ interface ScanResult {
   route: string;
   message: string;
   color: string;
+  clickable: boolean;
 }
 
 export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isScanning, setIsScanning] = useState(true);
   const [results, setResults] = useState<ScanResult[]>([]);
+  const [scanComplete, setScanComplete] = useState(false);
+  const navigate = useNavigate();
 
   const scanResults: ScanResult[] = [
-    { status: 200, route: "/blogs", message: "200 OK", color: "text-neon-green" },
-    { status: 200, route: "/hacks", message: "200 OK", color: "text-neon-green" },
-    { status: 200, route: "/secret", message: "200 OK", color: "text-neon-green" },
-    { status: 404, route: "/admin/passwords.txt", message: "404 Not Found", color: "text-red-500" },
+    { status: 200, route: "/blogs", message: "200 OK", color: "text-neon-green", clickable: true },
+    { status: 200, route: "/hacks", message: "200 OK", color: "text-neon-green", clickable: true },
+    { status: 200, route: "/secret", message: "200 OK", color: "text-neon-green", clickable: true },
+    { status: 404, route: "/admin/passwords.txt", message: "404 Not Found", color: "text-red-500", clickable: false },
   ];
 
   useEffect(() => {
@@ -31,15 +35,18 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
         setCurrentStep(prev => prev + 1);
       } else {
         setIsScanning(false);
-        setTimeout(() => {
-          onComplete();
-        }, 1000);
+        setScanComplete(true);
         clearInterval(interval);
       }
     }, 700);
 
     return () => clearInterval(interval);
-  }, [currentStep, onComplete]);
+  }, [currentStep]);
+
+  const handleRouteClick = (route: string) => {
+    navigate(route);
+    onComplete();
+  };
 
   return (
     <div className="bg-cyber-dark border border-neon-green/50 rounded-lg p-4 min-w-[300px] animate-fade-in">
@@ -60,9 +67,18 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
                 </span>
               ))}
             </span>
-            <span className="text-gray-300">
-              {result.route}
-            </span>
+            {result.clickable ? (
+              <button
+                onClick={() => handleRouteClick(result.route)}
+                className="text-gray-300 hover:text-neon-green transition-colors cursor-pointer underline"
+              >
+                {result.route}
+              </button>
+            ) : (
+              <span className="text-gray-300">
+                {result.route}
+              </span>
+            )}
           </div>
         ))}
         
@@ -83,9 +99,9 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
           </div>
         )}
         
-        {!isScanning && (
+        {scanComplete && (
           <div className="text-neon-green pt-2 border-t border-neon-green/30 mt-3">
-            <span className="animate-pulse">Scan Complete</span>
+            <span className="animate-pulse">Scan Complete - Click routes to navigate</span>
           </div>
         )}
       </div>

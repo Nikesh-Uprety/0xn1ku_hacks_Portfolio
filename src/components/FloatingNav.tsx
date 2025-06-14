@@ -36,7 +36,7 @@ const FloatingNav = () => {
 
   const handleBruteforceComplete = () => {
     setShowBruteforce(false);
-    setIsOpen(true);
+    // Don't automatically open the dropdown, let user interact with the scan results
   };
 
   return (
