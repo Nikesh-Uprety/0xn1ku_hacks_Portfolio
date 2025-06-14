@@ -1,0 +1,165 @@
+
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Database types
+export interface Blog {
+  id: string;
+  title: string;
+  content: string;
+  author: string;
+  created_at: string;
+  updated_at: string;
+  published: boolean;
+}
+
+export interface Hack {
+  id: string;
+  title: string;
+  description: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  category: string;
+  tools: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Secret {
+  id: string;
+  key: string;
+  value: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Auth functions
+export const signIn = async (email: string, password: string) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+  return { data, error };
+};
+
+export const signOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  return { error };
+};
+
+export const getCurrentUser = async () => {
+  const { data: { user } } = await supabase.auth.getUser();
+  return user;
+};
+
+// Blog CRUD operations
+export const getBlogs = async () => {
+  const { data, error } = await supabase
+    .from('blogs')
+    .select('*')
+    .order('created_at', { ascending: false });
+  return { data, error };
+};
+
+export const createBlog = async (blog: Omit<Blog, 'id' | 'created_at' | 'updated_at'>) => {
+  const { data, error } = await supabase
+    .from('blogs')
+    .insert([blog])
+    .select()
+    .single();
+  return { data, error };
+};
+
+export const updateBlog = async (id: string, updates: Partial<Blog>) => {
+  const { data, error } = await supabase
+    .from('blogs')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+  return { data, error };
+};
+
+export const deleteBlog = async (id: string) => {
+  const { error } = await supabase
+    .from('blogs')
+    .delete()
+    .eq('id', id);
+  return { error };
+};
+
+// Hack CRUD operations
+export const getHacks = async () => {
+  const { data, error } = await supabase
+    .from('hacks')
+    .select('*')
+    .order('created_at', { ascending: false });
+  return { data, error };
+};
+
+export const createHack = async (hack: Omit<Hack, 'id' | 'created_at' | 'updated_at'>) => {
+  const { data, error } = await supabase
+    .from('hacks')
+    .insert([hack])
+    .select()
+    .single();
+  return { data, error };
+};
+
+export const updateHack = async (id: string, updates: Partial<Hack>) => {
+  const { data, error } = await supabase
+    .from('hacks')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+  return { data, error };
+};
+
+export const deleteHack = async (id: string) => {
+  const { error } = await supabase
+    .from('hacks')
+    .delete()
+    .eq('id', id);
+  return { error };
+};
+
+// Secret CRUD operations
+export const getSecrets = async () => {
+  const { data, error } = await supabase
+    .from('secrets')
+    .select('*')
+    .order('created_at', { ascending: false });
+  return { data, error };
+};
+
+export const createSecret = async (secret: Omit<Secret, 'id' | 'created_at' | 'updated_at'>) => {
+  const { data, error } = await supabase
+    .from('secrets')
+    .insert([secret])
+    .select()
+    .single();
+  return { data, error };
+};
+
+export const updateSecret = async (id: string, updates: Partial<Secret>) => {
+  const { data, error } = await supabase
+    .from('secrets')
+    .update({ ...updates, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+  return { data, error };
+};
+
+export const deleteSecret = async (id: string) => {
+  const { error } = await supabase
+    .from('secrets')
+    .delete()
+    .eq('id', id);
+  return { error };
+};
