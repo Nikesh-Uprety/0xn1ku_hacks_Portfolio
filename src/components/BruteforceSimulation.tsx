@@ -50,38 +50,39 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
   };
 
   return (
-    <div className="bg-cyber-dark border border-neon-green/50 rounded-lg p-4 min-w-[300px] animate-fade-in">
-      <div className="font-mono text-sm space-y-2">
+    <div className="bg-black border border-neon-green/50 rounded-lg p-4 min-w-[400px] animate-fade-in terminal-scroll">
+      <div className="font-mono text-sm space-y-1">
+        {/* Terminal header */}
+        <div className="text-neon-green mb-2">
+          <span>0xN1kU_H4X_!@kali:~$ dirb http://target.com ./wordlist.txt</span>
+        </div>
+        
         {results.map((result, index) => (
           <div key={index} className="flex items-center space-x-2 animate-fade-in">
-            <span className={`${result.color} font-bold`}>
-              {result.message}
-            </span>
             <span className="text-gray-400">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <span key={i} className="animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}>
-                  .
-                </span>
-              ))}
+              Testing:
             </span>
             {result.clickable ? (
               <button
                 onClick={() => handleRouteClick(result.route)}
-                className="text-gray-300 hover:text-neon-green transition-colors cursor-pointer underline"
+                className="text-white hover:text-neon-green transition-colors cursor-pointer underline"
               >
-                {result.route}
+                http://target.com{result.route}
               </button>
             ) : (
-              <span className="text-gray-300">
-                {result.route}
+              <span className="text-white">
+                http://target.com{result.route}
               </span>
             )}
+            <span className={`${result.color} font-bold`}>
+              ({result.status}) {result.message}
+            </span>
           </div>
         ))}
         
         {isScanning && currentStep < scanResults.length && (
           <div className="flex items-center space-x-2 text-gray-400">
-            <span>Scanning</span>
+            <span>Scanning directories</span>
             <span className="flex space-x-1">
               {Array.from({ length: 3 }).map((_, i) => (
                 <span 
@@ -93,6 +94,17 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
                 </span>
               ))}
             </span>
+          </div>
+        )}
+
+        {scanComplete && (
+          <div className="mt-3 pt-2 border-t border-neon-green/30">
+            <div className="text-neon-green">
+              ---- Scanning complete ----
+            </div>
+            <div className="text-gray-400 text-xs mt-1">
+              Found {results.filter(r => r.status === 200).length} accessible directories
+            </div>
           </div>
         )}
       </div>
