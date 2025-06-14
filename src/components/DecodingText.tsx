@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 
 interface DecodingTextProps {
@@ -14,17 +15,20 @@ export const DecodingText = ({ baseText, isActive }: DecodingTextProps) => {
   };
 
   const generateGlitchedText = (originalText: string) => {
-    return originalText
-      .split('')
-      .map(char => {
-        // Keep certain characters stable (like ./: to maintain structure)
-        if (char === '.' || char === '/' || char === ':') {
-          return char;
-        }
-        // Randomly glitch other characters
-        return Math.random() < 0.3 ? generateRandomChar() : char;
-      })
-      .join('');
+    // Split the text into stable part and glitchable part
+    const stablePart = './api/';
+    const glitchablePart = 'FUZZ';
+    
+    if (originalText === './api/FUZZ') {
+      const glitchedFuzz = glitchablePart
+        .split('')
+        .map(() => generateRandomChar())
+        .join('');
+      
+      return stablePart + glitchedFuzz;
+    }
+    
+    return originalText;
   };
 
   useEffect(() => {
