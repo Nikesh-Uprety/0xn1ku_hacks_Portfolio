@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,19 +49,19 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
   };
 
   return (
-    <div className="bg-black border border-neon-green/50 rounded-lg p-4 min-w-[400px] animate-fade-in terminal-scroll">
-      <div className="font-mono text-sm space-y-1">
+    <div className="bg-black border border-neon-green/50 rounded-lg p-3 w-80 ml-auto mr-4 animate-fade-in terminal-scroll">
+      <div className="font-mono text-sm space-y-1 text-left">
         {/* Terminal header */}
         <div className="text-neon-green mb-2">
           <span>~$ ffuf -u {'{URL}'} ./config.txt</span>
         </div>
         
         {results.map((result, index) => (
-          <div key={index} className="flex items-center space-x-2 animate-fade-in">
-            <span className={`${result.color} font-bold`}>
+          <div key={index} className="flex items-start space-x-2 animate-fade-in">
+            <span className={`${result.color} font-bold whitespace-nowrap`}>
               {result.message}
             </span>
-            <span className="text-gray-400">
+            <span className="text-gray-400 flex-shrink-0">
               {Array.from({ length: 4 }).map((_, i) => (
                 <span key={i}>.</span>
               ))}
@@ -70,12 +69,12 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
             {result.clickable ? (
               <button
                 onClick={() => handleRouteClick(result.route)}
-                className="text-white hover:text-neon-green transition-colors cursor-pointer underline"
+                className="text-white hover:text-neon-green transition-colors cursor-pointer underline text-left"
               >
                 {result.route}
               </button>
             ) : (
-              <span className="text-white">
+              <span className="text-white text-left">
                 {result.route}
               </span>
             )}
