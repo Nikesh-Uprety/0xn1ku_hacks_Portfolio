@@ -100,10 +100,10 @@ const Blogs = () => {
     <div className="min-h-screen bg-cyber-bg relative">
       <div className="container mx-auto px-6 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-cyber font-bold text-neon-green mb-4 glitch-text" data-text="SECURITY RESEARCH BLOG">
-            SECURITY RESEARCH BLOG
+          <h1 className="text-2xl font-cyber font-bold text-neon-green mb-4" data-text="BLOGS PAGE">
+            BLOGS PAGE
           </h1>
-          <p className="text-gray-300 font-mono">Exploring the depths of cybersecurity</p>
+          <p className="text-gray-300 font-mono text-sm">Exploring the depths of cybersecurity</p>
         </div>
 
         <div className="max-w-4xl mx-auto">
@@ -120,13 +120,13 @@ const Blogs = () => {
                 {/* Blog post card */}
                 <div className="ml-16 glass-morphism rounded-lg p-6 hover:border-neon-green/50 transition-all">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-4 text-sm text-gray-400 font-mono">
+                    <div className="flex items-center space-x-4 text-xs text-gray-400 font-mono">
                       <div className="flex items-center space-x-1">
-                        <Calendar className="w-4 h-4" />
+                        <Calendar className="w-3 h-3" />
                         <span>{post.date}</span>
                       </div>
                       <div className="flex items-center space-x-1">
-                        <User className="w-4 h-4" />
+                        <User className="w-3 h-3" />
                         <span>{post.author}</span>
                       </div>
                     </div>
@@ -134,11 +134,11 @@ const Blogs = () => {
                       onClick={() => togglePost(post.id)}
                       className="text-neon-green hover:text-white transition-colors"
                     >
-                      {expandedPost === post.id ? <ChevronUp /> : <ChevronDown />}
+                      {expandedPost === post.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     </button>
                   </div>
                   
-                  <h2 className="text-xl font-bold text-neon-green mb-3">{post.title}</h2>
+                  <h2 className="text-lg font-bold text-neon-green mb-3">{post.title}</h2>
                   
                   <div className="flex flex-wrap gap-2 mb-4">
                     {post.tags.map((tag) => (
@@ -153,27 +153,27 @@ const Blogs = () => {
                   
                   {expandedPost === post.id && (
                     <div className="prose prose-invert max-w-none">
-                      <div className="markdown-content text-gray-300">
+                      <div className="markdown-content text-gray-300 text-sm">
                         <ReactMarkdown 
                           remarkPlugins={[remarkGfm]}
                           components={{
-                            h1: ({ children }) => <h1 className="text-2xl font-bold text-neon-green mb-4">{children}</h1>,
-                            h2: ({ children }) => <h2 className="text-xl font-bold text-neon-green mb-3 mt-6">{children}</h2>,
-                            h3: ({ children }) => <h3 className="text-lg font-bold text-neon-green mb-2 mt-4">{children}</h3>,
-                            p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
+                            h1: ({ children }) => <h1 className="text-lg font-bold text-neon-green mb-4">{children}</h1>,
+                            h2: ({ children }) => <h2 className="text-base font-bold text-neon-green mb-3 mt-6">{children}</h2>,
+                            h3: ({ children }) => <h3 className="text-sm font-bold text-neon-green mb-2 mt-4">{children}</h3>,
+                            p: ({ children }) => <p className="mb-4 leading-relaxed text-sm">{children}</p>,
                             code: ({ children, className }) => {
                               const isBlock = className?.includes('language-');
                               return isBlock ? (
                                 <pre className="bg-cyber-dark border border-neon-green/30 rounded p-4 overflow-x-auto mb-4">
-                                  <code className="text-neon-green font-mono text-sm">{children}</code>
+                                  <code className="text-neon-green font-mono text-xs">{children}</code>
                                 </pre>
                               ) : (
-                                <code className="bg-cyber-dark text-neon-green px-1 py-0.5 rounded font-mono text-sm">{children}</code>
+                                <code className="bg-cyber-dark text-neon-green px-1 py-0.5 rounded font-mono text-xs">{children}</code>
                               );
                             },
-                            ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
-                            ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
-                            li: ({ children }) => <li className="text-gray-300">{children}</li>,
+                            ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-1 text-sm">{children}</ul>,
+                            ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-1 text-sm">{children}</ol>,
+                            li: ({ children }) => <li className="text-gray-300 text-sm">{children}</li>,
                             strong: ({ children }) => <strong className="text-neon-green font-bold">{children}</strong>,
                           }}
                         >

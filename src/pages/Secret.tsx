@@ -116,12 +116,12 @@ const Secret = () => {
         <Card className="w-full max-w-md glass-morphism border-red-500/50 relative z-10">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <Shield className="w-16 h-16 text-red-500" />
+              <Shield className="w-12 h-12 text-red-500" />
             </div>
-            <CardTitle className="text-2xl font-cyber text-red-500 glitch-text" data-text="CLASSIFIED ACCESS">
+            <CardTitle className="text-xl font-cyber text-red-500" data-text="CLASSIFIED ACCESS">
               CLASSIFIED ACCESS
             </CardTitle>
-            <CardDescription className="text-gray-400 font-mono">
+            <CardDescription className="text-gray-400 font-mono text-sm">
               AES-256 Encrypted Vault
             </CardDescription>
           </CardHeader>
@@ -173,7 +173,7 @@ const Secret = () => {
     <div className="min-h-screen bg-cyber-bg relative">
       <div className="container mx-auto px-6 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-cyber font-bold text-red-500 glitch-text" data-text="CLASSIFIED VAULT">
+          <h1 className="text-2xl font-cyber font-bold text-red-500" data-text="CLASSIFIED VAULT">
             CLASSIFIED VAULT
           </h1>
           <Button onClick={handleLogout} variant="outline" className="border-red-500 text-red-500 hover:bg-red-500/20">
@@ -185,13 +185,13 @@ const Secret = () => {
           {Object.entries(passwords).map(([key, value]) => (
             <Card key={key} className="glass-morphism border-red-500/30">
               <CardHeader>
-                <CardTitle className="text-red-400 font-mono text-lg">
+                <CardTitle className="text-red-400 font-mono text-base">
                   {key.replace(/_/g, ' ').toUpperCase()}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="bg-cyber-dark p-4 rounded border border-red-500/30">
-                  <code className="text-red-300 font-mono break-all">{value}</code>
+                  <code className="text-red-300 font-mono break-all text-sm">{value}</code>
                 </div>
               </CardContent>
             </Card>
@@ -199,7 +199,7 @@ const Secret = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-red-400/60 font-mono text-sm">
+          <p className="text-red-400/60 font-mono text-xs">
             🔐 Encrypted with AES-256 + PBKDF2 | Zero-Knowledge Architecture
           </p>
         </div>
