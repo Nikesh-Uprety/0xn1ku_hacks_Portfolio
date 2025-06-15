@@ -24,10 +24,10 @@ export const ContactSection = () => {
 
         <div className="bg-gray-900 rounded-lg border border-gray-700 p-6 mb-8 font-mono">
           <div className="text-accent-teal mb-4">
-            > contact ./nikuhacks
+            {'>'} contact ./nikuhacks
           </div>
           <div className="text-gray-300 ml-4">
-            => [ 
+            ={'>'} [ 
             <a href="https://github.com/Nikesh-Uprety" className="text-accent-teal hover:underline mx-2" target="_blank" rel="noopener noreferrer">github</a>
             ] [ 
             <a href="https://www.linkedin.com/in/nikesh-uprety-287a88244/" className="text-accent-teal hover:underline mx-2" target="_blank" rel="noopener noreferrer">linkedin</a>

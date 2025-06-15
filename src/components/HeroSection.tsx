@@ -43,7 +43,7 @@ export const HeroSection = () => {
           
           {!isTyping && (
             <div className="mt-4 text-gray-300">
-              <div className="mb-2">=> {roles.join(" | ")}</div>
+              <div className="mb-2">={'>'} {roles.join(" | ")}</div>
               <div className="text-gray-500 text-sm mt-4">
                 "Crafting secure systems, breaking bad ones."
               </div>
