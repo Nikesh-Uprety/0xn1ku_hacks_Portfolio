@@ -1,82 +1,80 @@
 
-import { useState } from "react";
-import { TypeWriter } from "./TypeWriter";
+import { useState, useEffect } from "react";
 
 export const HeroSection = () => {
-  const [isGlitching, setIsGlitching] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [currentText, setCurrentText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+  
+  const terminalText = "./0xn1ku_hacks ~# whoami";
+  const roles = ["Ethical Hacker", "CTF Creator", "Full Stack Dev", "DevSecOps"];
 
-  const handleImageHover = () => {
-    setIsGlitching(true);
-    setTimeout(() => setIsGlitching(false), 300);
-  };
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    
+    if (isTyping && currentText.length < terminalText.length) {
+      timeout = setTimeout(() => {
+        setCurrentText(terminalText.slice(0, currentText.length + 1));
+      }, 100);
+    } else if (currentText.length === terminalText.length) {
+      setIsTyping(false);
+    }
 
-  const roleTexts = [
-    "DevSecOps Engineer",
-    "Ethical Hacker & Security Researcher",
-    "Full-Stack Developer"
-  ];
+    return () => clearTimeout(timeout);
+  }, [currentText, isTyping, terminalText]);
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-20">
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        {/* Profile Image */}
-        <div className="flex justify-center order-1 lg:order-1">
-          <div
-            className={`relative ${isGlitching ? "animate-glitch" : ""}`}
-            onMouseEnter={handleImageHover}
-          >
-            <div className="relative">
-              {!imageLoaded && (
-                <div className="w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 bg-cyber-dark rounded-lg neon-border animate-pulse flex items-center justify-center">
-                  <div className="text-neon-green font-mono">Loading...</div>
-                </div>
-              )}
-              <img
-                src="/lovable-uploads/dcf27ca5-65bd-4f90-8ae9-cd9d1d0f0efc.png"
-                alt="Nikesh Uprety"
-                className={`w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 object-cover rounded-lg neon-border transition-all duration-300 ${
-                  isGlitching ? "opacity-50" : ""
-                } ${imageLoaded ? "opacity-100" : "opacity-0 absolute"}`}
-                onLoad={() => setImageLoaded(true)}
-                loading="eager"
-                decoding="async"
-              />
-              {isGlitching && (
-                <div className="absolute inset-0 bg-neon-green opacity-20 rounded-lg animate-pulse"></div>
-              )}
+    <div className="container mx-auto px-4 sm:px-6 py-12">
+      <div className="max-w-4xl mx-auto">
+        {/* Terminal Prompt */}
+        <div className="bg-gray-900 rounded-lg border border-gray-700 p-6 mb-8 font-mono">
+          <div className="flex items-center mb-4">
+            <div className="flex space-x-2">
+              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
             </div>
-            <div className="absolute -inset-1 bg-gradient-to-r from-neon-green via-neon-blue to-neon-purple opacity-30 rounded-lg blur"></div>
+            <div className="ml-4 text-gray-400 text-sm">terminal</div>
           </div>
+          
+          <div className="text-accent-teal text-lg">
+            {currentText}
+            {isTyping && <span className="animate-pulse">|</span>}
+          </div>
+          
+          {!isTyping && (
+            <div className="mt-4 text-gray-300">
+              <div className="mb-2">=> {roles.join(" | ")}</div>
+              <div className="text-gray-500 text-sm mt-4">
+                "Crafting secure systems, breaking bad ones."
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Hero Text */}
-        <div className="space-y-6 order-2 lg:order-2 text-center lg:text-left">
-          <div className="font-mono text-neon-green text-sm sm:text-base lg:text-lg">
-            <span className="animate-typewriter">
-              0xN1kU_H4X_!@kali:~$ whoami
-            </span>
-            <span className="animate-blink ml-1">_</span>
-          </div>
-
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-cyber font-bold leading-tight">
-            <span className="text-white block">CYBERSECURITY</span>
-            <span className="text-neon-green animate-text-flicker block">
-              SPECIALIST
-            </span>
+        {/* Main Content */}
+        <div className="text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            Nikesh Uprety
           </h1>
+          
+          <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+            Cybersecurity specialist passionate about ethical hacking, CTF challenges, 
+            and building secure applications.
+          </p>
 
-          <div className="min-h-[120px] sm:min-h-[140px]">
-            <TypeWriter texts={roleTexts} speed={50} delay={800} repeatInterval={10000} />
-          </div>
-
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-6 justify-center lg:justify-start">
-            <button className="cyber-button px-4 sm:px-6 lg:px-8 py-3 rounded font-mono text-sm sm:text-base lg:text-lg hover:scale-105 transition-transform">
-              DOWNLOAD CV
-            </button>
-            <button className="border border-neon-green text-neon-green px-4 sm:px-6 lg:px-8 py-3 rounded font-mono text-sm sm:text-base lg:text-lg hover:bg-neon-green hover:text-black transition-colors">
-              VIEW PROJECTS
-            </button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="#projects" 
+              className="bg-accent-teal text-dark-bg px-6 py-3 rounded-lg font-medium hover:bg-accent-teal/90 transition-colors"
+            >
+              View Projects
+            </a>
+            <a 
+              href="#contact" 
+              className="border border-accent-teal text-accent-teal px-6 py-3 rounded-lg font-medium hover:bg-accent-teal/10 transition-colors"
+            >
+              Contact Me
+            </a>
           </div>
         </div>
       </div>
