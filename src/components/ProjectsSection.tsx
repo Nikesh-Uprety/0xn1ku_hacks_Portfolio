@@ -8,7 +8,6 @@ const projects = [
     name: "React.JS Learning Path",
     description: "Comprehensive 20-hour React.JS course covering fundamentals, hooks, state management, and modern development practices.",
     category: "[Web Dev]",
-    flag: "flag{react_mastery_unlocked}",
     tech: ["React", "JavaScript", "CSS", "HTML"],
     github: "https://github.com/Nikesh-Uprety/React.JS_LearningPath-20hrsCOURSE",
     demo: "#",
@@ -19,7 +18,6 @@ const projects = [
     name: "NIKU BLOG MERN",
     description: "Full-stack blog application built with MongoDB, Express.js, React, and Node.js featuring user authentication and content management.",
     category: "[Full Stack]",
-    flag: "flag{mern_stack_deployed}",
     tech: ["MongoDB", "Express.js", "React", "Node.js"],
     github: "https://github.com/Nikesh-Uprety/NIKU_BLOG_MERN",
     demo: "#",
@@ -30,7 +28,6 @@ const projects = [
     name: "Hash Buster Tool",
     description: "Python-based hash cracking tool for cybersecurity testing and password analysis with multiple hash algorithm support.",
     category: "[Security]",
-    flag: "flag{hash_cracking_success}",
     tech: ["Python", "Cryptography", "Security", "CLI"],
     github: "https://github.com/Nikesh-Uprety/Hash-Buster_Tool.py",
     demo: "#",
@@ -107,9 +104,6 @@ export const ProjectsSection = () => {
                 </p>
 
                 <div className="mb-4">
-                  <div className="font-mono text-xs text-gray-500 mb-2">
-                    {project.flag}
-                  </div>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech) => (
                       <span

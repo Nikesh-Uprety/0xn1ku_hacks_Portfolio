@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Calendar, User, ChevronDown, ChevronUp } from "lucide-react";
+import { Calendar, User, ChevronDown, ChevronUp, Hash } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -11,6 +11,7 @@ interface BlogPost {
   author: string;
   content: string;
   tags: string[];
+  readTime: string;
 }
 
 const blogPosts: BlogPost[] = [
@@ -38,7 +39,8 @@ This technique relies on the application's different responses to true and false
 - Use parameterized queries
 - Implement proper input validation
 - Apply the principle of least privilege`,
-    tags: ["SQL Injection", "Web Security", "Penetration Testing"]
+    tags: ["SQL Injection", "Web Security", "Penetration Testing"],
+    readTime: "8 min read"
   },
   {
     id: 2,
@@ -66,7 +68,8 @@ const apiLimiter = rateLimit({
   message: 'Too many requests from this IP'
 });
 \`\`\``,
-    tags: ["API Security", "Rate Limiting", "Authentication"]
+    tags: ["API Security", "Rate Limiting", "Authentication"],
+    readTime: "6 min read"
   },
   {
     id: 3,
@@ -85,108 +88,149 @@ Finding zero-day vulnerabilities requires a systematic approach and deep underst
 
 ## Responsible Disclosure
 Always follow responsible disclosure practices when discovering vulnerabilities.`,
-    tags: ["Zero-Day", "Vulnerability Research", "Security Research"]
+    tags: ["Zero-Day", "Vulnerability Research", "Security Research"],
+    readTime: "10 min read"
   }
 ];
 
 const Blogs = () => {
   const [expandedPost, setExpandedPost] = useState<number | null>(null);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const togglePost = (id: number) => {
     setExpandedPost(expandedPost === id ? null : id);
   };
 
+  const allTags = [...new Set(blogPosts.flatMap(post => post.tags))];
+  
+  const filteredPosts = selectedTag 
+    ? blogPosts.filter(post => post.tags.includes(selectedTag))
+    : blogPosts;
+
   return (
-    <div className="min-h-screen bg-cyber-bg relative">
-      <div className="container mx-auto px-6 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-2xl font-cyber font-bold text-neon-green mb-4" data-text="BLOGS PAGE">
-            BLOGS PAGE
-          </h1>
-          <p className="text-gray-300 font-mono text-sm">Exploring the depths of cybersecurity</p>
+    <div className="min-h-screen bg-dark-bg text-gray-100">
+      <div className="container mx-auto px-6 py-8 max-w-4xl">
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-white mb-4">Security Blog</h1>
+          <p className="text-gray-400 text-lg">
+            Exploring cybersecurity research, techniques, and insights
+          </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          {/* Timeline */}
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-neon-green/30"></div>
-            
-            {blogPosts.map((post, index) => (
-              <div key={post.id} className="relative mb-8">
-                {/* Timeline dot */}
-                <div className="absolute left-6 w-4 h-4 bg-neon-green rounded-full border-2 border-cyber-bg"></div>
-                
-                {/* Blog post card */}
-                <div className="ml-16 glass-morphism rounded-lg p-6 hover:border-neon-green/50 transition-all">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-4 text-xs text-gray-400 font-mono">
-                      <div className="flex items-center space-x-1">
-                        <Calendar className="w-3 h-3" />
-                        <span>{post.date}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <User className="w-3 h-3" />
-                        <span>{post.author}</span>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => togglePost(post.id)}
-                      className="text-neon-green hover:text-white transition-colors"
-                    >
-                      {expandedPost === post.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </button>
-                  </div>
-                  
-                  <h2 className="text-lg font-bold text-neon-green mb-3">{post.title}</h2>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 bg-neon-green/20 text-neon-green text-xs rounded font-mono"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  {expandedPost === post.id && (
-                    <div className="prose prose-invert max-w-none">
-                      <div className="markdown-content text-gray-300 text-sm">
-                        <ReactMarkdown 
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            h1: ({ children }) => <h1 className="text-lg font-bold text-neon-green mb-4">{children}</h1>,
-                            h2: ({ children }) => <h2 className="text-base font-bold text-neon-green mb-3 mt-6">{children}</h2>,
-                            h3: ({ children }) => <h3 className="text-sm font-bold text-neon-green mb-2 mt-4">{children}</h3>,
-                            p: ({ children }) => <p className="mb-4 leading-relaxed text-sm">{children}</p>,
-                            code: ({ children, className }) => {
-                              const isBlock = className?.includes('language-');
-                              return isBlock ? (
-                                <pre className="bg-cyber-dark border border-neon-green/30 rounded p-4 overflow-x-auto mb-4">
-                                  <code className="text-neon-green font-mono text-xs">{children}</code>
-                                </pre>
-                              ) : (
-                                <code className="bg-cyber-dark text-neon-green px-1 py-0.5 rounded font-mono text-xs">{children}</code>
-                              );
-                            },
-                            ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-1 text-sm">{children}</ul>,
-                            ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-1 text-sm">{children}</ol>,
-                            li: ({ children }) => <li className="text-gray-300 text-sm">{children}</li>,
-                            strong: ({ children }) => <strong className="text-neon-green font-bold">{children}</strong>,
-                          }}
-                        >
-                          {post.content}
-                        </ReactMarkdown>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+        {/* Tag Filter */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setSelectedTag(null)}
+              className={`px-3 py-1 rounded-full text-sm font-mono transition-colors ${
+                !selectedTag 
+                  ? 'bg-accent-teal text-dark-bg' 
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              All Posts
+            </button>
+            {allTags.map(tag => (
+              <button
+                key={tag}
+                onClick={() => setSelectedTag(tag)}
+                className={`px-3 py-1 rounded-full text-sm font-mono transition-colors ${
+                  selectedTag === tag
+                    ? 'bg-accent-teal text-dark-bg'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                }`}
+              >
+                <Hash className="w-3 h-3 inline mr-1" />
+                {tag}
+              </button>
             ))}
           </div>
         </div>
+
+        {/* Blog Posts */}
+        <div className="space-y-6">
+          {filteredPosts.map((post) => (
+            <article key={post.id} className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden">
+              <div className="p-6">
+                {/* Post Header */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-4 text-sm text-gray-400 font-mono">
+                    <div className="flex items-center space-x-1">
+                      <Calendar className="w-4 h-4" />
+                      <span>{post.date}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <User className="w-4 h-4" />
+                      <span>{post.author}</span>
+                    </div>
+                    <span>{post.readTime}</span>
+                  </div>
+                  <button
+                    onClick={() => togglePost(post.id)}
+                    className="text-accent-teal hover:text-white transition-colors p-1"
+                  >
+                    {expandedPost === post.id ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                  </button>
+                </div>
+                
+                {/* Post Title */}
+                <h2 className="text-2xl font-bold text-white mb-4 leading-tight">
+                  {post.title}
+                </h2>
+                
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-1 bg-accent-teal/20 text-accent-teal text-xs rounded font-mono"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+                
+                {/* Post Content */}
+                {expandedPost === post.id && (
+                  <div className="prose prose-invert max-w-none border-t border-gray-800 pt-6">
+                    <ReactMarkdown 
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        h1: ({ children }) => <h1 className="text-2xl font-bold text-accent-teal mb-6">{children}</h1>,
+                        h2: ({ children }) => <h2 className="text-xl font-bold text-accent-teal mb-4 mt-8">{children}</h2>,
+                        h3: ({ children }) => <h3 className="text-lg font-bold text-accent-teal mb-3 mt-6">{children}</h3>,
+                        p: ({ children }) => <p className="mb-4 leading-relaxed text-gray-300">{children}</p>,
+                        code: ({ children, className }) => {
+                          const isBlock = className?.includes('language-');
+                          return isBlock ? (
+                            <pre className="bg-gray-950 border border-accent-teal/30 rounded-lg p-4 overflow-x-auto mb-6">
+                              <code className="text-accent-teal font-mono text-sm">{children}</code>
+                            </pre>
+                          ) : (
+                            <code className="bg-gray-800 text-accent-teal px-2 py-1 rounded font-mono text-sm">{children}</code>
+                          );
+                        },
+                        ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-2">{children}</ol>,
+                        li: ({ children }) => <li className="text-gray-300">{children}</li>,
+                        strong: ({ children }) => <strong className="text-accent-teal font-bold">{children}</strong>,
+                      }}
+                    >
+                      {post.content}
+                    </ReactMarkdown>
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {filteredPosts.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 font-mono">No posts found for the selected tag.</p>
+          </div>
+        )}
       </div>
     </div>
   );

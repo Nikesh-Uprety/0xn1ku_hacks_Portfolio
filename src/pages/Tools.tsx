@@ -114,7 +114,7 @@ const Tools = () => {
                   placeholder="Enter URL to encode/decode..."
                   value={urlInput}
                   onChange={(e) => setUrlInput(e.target.value)}
-                  className="bg-cyber-dark border-neon-green/30 text-white"
+                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
                 />
                 <div className="flex space-x-2">
                   <Button onClick={encodeURL} className="cyber-button">Encode</Button>
@@ -124,7 +124,7 @@ const Tools = () => {
                   placeholder="Output will appear here..."
                   value={urlOutput}
                   readOnly
-                  className="bg-cyber-dark border-neon-green/30 text-neon-green"
+                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
                 />
               </CardContent>
             </Card>
@@ -141,7 +141,7 @@ const Tools = () => {
                   placeholder="Enter text to encode/decode..."
                   value={base64Input}
                   onChange={(e) => setBase64Input(e.target.value)}
-                  className="bg-cyber-dark border-neon-green/30 text-white"
+                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
                 />
                 <div className="flex space-x-2">
                   <Button onClick={encodeBase64} className="cyber-button">Encode</Button>
@@ -151,7 +151,7 @@ const Tools = () => {
                   placeholder="Output will appear here..."
                   value={base64Output}
                   readOnly
-                  className="bg-cyber-dark border-neon-green/30 text-neon-green"
+                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
                 />
               </CardContent>
             </Card>
@@ -168,7 +168,7 @@ const Tools = () => {
                   placeholder="Enter cipher text to identify..."
                   value={cipherInput}
                   onChange={(e) => setCipherInput(e.target.value)}
-                  className="bg-cyber-dark border-neon-green/30 text-white"
+                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
                 />
                 <Button onClick={identifyCipher} className="cyber-button">Identify Cipher</Button>
                 <div className="p-4 bg-cyber-dark border border-neon-green/30 rounded">
@@ -190,7 +190,7 @@ const Tools = () => {
                   placeholder="Enter JavaScript code..."
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="bg-cyber-dark border-neon-green/30 text-white font-mono"
+                  className="bg-cyber-dark border-neon-green/30 text-neon-green font-mono placeholder:text-gray-500"
                   rows={8}
                 />
                 <Button onClick={executeCode} className="cyber-button">Execute</Button>

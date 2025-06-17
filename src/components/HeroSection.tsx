@@ -43,7 +43,7 @@ export const HeroSection = () => {
           
           {!isTyping && (
             <div className="mt-4 text-gray-300">
-              <div className="mb-2">={'>'} {roles.join(" | ")}</div>
+              <div className="mb-2">{'>'} {roles.join(" | ")}</div>
               <div className="text-gray-500 text-sm mt-4">
                 "Crafting secure systems, breaking bad ones."
               </div>
@@ -56,16 +56,22 @@ export const HeroSection = () => {
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
             Nikesh Uprety
           </h1>
-          
-          <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            Cybersecurity specialist passionate about ethical hacking, CTF challenges, 
-            and building secure applications.
-          </p>
+
+          {/* Portfolio Banner Image */}
+          <div className="mb-8">
+            <div className="bg-gray-900 rounded-lg border border-gray-700 p-4 max-w-2xl mx-auto">
+              <img 
+                src="https://i.ibb.co/1fW9Gxm6/full-final-banner.png" 
+                alt="Portfolio Preview" 
+                className="w-full h-auto rounded-lg object-cover"
+              />
+            </div>
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="#projects" 
-              className="bg-accent-teal text-dark-bg px-6 py-3 rounded-lg font-medium hover:bg-accent-teal/90 transition-colors"
+              className="bg-accent-teal text-dark-bg px-6 py-3 rounded-lg font-medium hover:bg-accent-teal/90 hover:text-dark-bg transition-colors"
             >
               View Projects
             </a>

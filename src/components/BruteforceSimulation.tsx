@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DecodingText } from './DecodingText';
@@ -55,8 +56,8 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
       <div className="font-mono text-sm space-y-1 text-left">
         <div className="text-neon-green mb-2">
           <span>~$ ffuf -u url.txt/api/</span>
-          <DecodingText baseText="ADMIN" isActive={isScanning} />
-          <span> -w ./config.txt</span>
+          <DecodingText baseText="FUZZ" isActive={isScanning} />
+          <span> -w ./common_api_lists.txt</span>
         </div>
         
         {results.map((result, index) => (
