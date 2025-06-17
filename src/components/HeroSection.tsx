@@ -35,15 +35,17 @@ export const HeroSection = () => {
             </div>
             <div className="ml-4 text-gray-400 text-sm">terminal</div>
           </div>
-          
+
           <div className="text-accent-teal text-lg">
             {currentText}
             {isTyping && <span className="animate-pulse">|</span>}
           </div>
-          
+
           {!isTyping && (
             <div className="mt-4 text-gray-300">
-              <div className="mb-2">{'>'} {roles.join(" | ")}</div>
+              <div className="mb-2">
+                {">"} {roles.join(" | ")}
+              </div>
               <div className="text-gray-500 text-sm mt-4">
                 "Crafting secure systems, breaking bad ones."
               </div>
@@ -60,23 +62,23 @@ export const HeroSection = () => {
           {/* Portfolio Banner Image */}
           <div className="mb-8">
             <div className="bg-gray-900 rounded-lg border border-gray-700 p-4 max-w-2xl mx-auto">
-              <img 
-                src="https://i.ibb.co/1fW9Gxm6/full-final-banner.png" 
-                alt="Portfolio Preview" 
+              <img
+                src="https://i.ibb.co/N6PySG05/full-final-banner-min.png"
+                alt="Portfolio Preview"
                 className="w-full h-auto rounded-lg object-cover"
               />
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a 
-              href="#projects" 
+            <a
+              href="#projects"
               className="bg-accent-teal text-dark-bg px-6 py-3 rounded-lg font-medium hover:bg-accent-teal/90 hover:text-dark-bg transition-colors"
             >
               View Projects
             </a>
-            <a 
-              href="#contact" 
+            <a
+              href="#contact"
               className="border border-accent-teal text-accent-teal px-6 py-3 rounded-lg font-medium hover:bg-accent-teal/10 transition-colors"
             >
               Contact Me

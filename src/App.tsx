@@ -12,6 +12,7 @@ import Blogs from "./pages/Blogs";
 import Tools from "./pages/Tools";
 import Secret from "./pages/Secret";
 import Nexus from "./pages/Nexus";
+import Hacks from "./pages/Hacks";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -33,7 +34,7 @@ const App = () => (
                 <Route path="/tools" element={<Tools />} />
                 <Route path="/secret" element={<Secret />} />
                 <Route path="/nexus" element={<Nexus />} />
-                <Route path="/hacks" element={<Nexus />} />
+                <Route path="/hacks" element={<Hacks />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
