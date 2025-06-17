@@ -85,28 +85,28 @@ const Tools = () => {
   };
 
   return (
-    <div className="min-h-screen bg-cyber-bg relative">
+    <div className="min-h-screen bg-dark-bg text-gray-100">
       <div className="container mx-auto px-6 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-cyber font-bold text-neon-green mb-4 glitch-text" data-text="TOOLKIT">
+          <h1 className="text-4xl font-bold text-accent-teal mb-4">
             TOOLKIT
           </h1>
           <p className="text-gray-300 font-mono">Essential tools for penetration testing and CTF challenges</p>
         </div>
 
         <Tabs defaultValue="url" className="max-w-4xl mx-auto">
-          <TabsList className="grid w-full grid-cols-5 bg-cyber-dark border border-neon-green/30">
-            <TabsTrigger value="url" className="data-[state=active]:bg-neon-green/20 data-[state=active]:text-neon-green">URL Codec</TabsTrigger>
-            <TabsTrigger value="base64" className="data-[state=active]:bg-neon-green/20 data-[state=active]:text-neon-green">Base64</TabsTrigger>
-            <TabsTrigger value="cipher" className="data-[state=active]:bg-neon-green/20 data-[state=active]:text-neon-green">Cipher ID</TabsTrigger>
-            <TabsTrigger value="compiler" className="data-[state=active]:bg-neon-green/20 data-[state=active]:text-neon-green">Compiler</TabsTrigger>
-            <TabsTrigger value="external" className="data-[state=active]:bg-neon-green/20 data-[state=active]:text-neon-green">External</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5 bg-gray-900 border border-accent-teal/30">
+            <TabsTrigger value="url" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">URL Codec</TabsTrigger>
+            <TabsTrigger value="base64" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">Base64</TabsTrigger>
+            <TabsTrigger value="cipher" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">Cipher ID</TabsTrigger>
+            <TabsTrigger value="compiler" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">Compiler</TabsTrigger>
+            <TabsTrigger value="external" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">External</TabsTrigger>
           </TabsList>
 
           <TabsContent value="url" className="mt-6">
-            <Card className="glass-morphism border-neon-green/30">
+            <Card className="bg-gray-900 border-accent-teal/30">
               <CardHeader>
-                <CardTitle className="text-neon-green">URL Encoder/Decoder</CardTitle>
+                <CardTitle className="text-accent-teal">URL Encoder/Decoder</CardTitle>
                 <CardDescription className="text-gray-400">Encode or decode URL components</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -114,26 +114,26 @@ const Tools = () => {
                   placeholder="Enter URL to encode/decode..."
                   value={urlInput}
                   onChange={(e) => setUrlInput(e.target.value)}
-                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
+                  className="bg-gray-800 border-accent-teal/30 text-accent-teal placeholder:text-gray-500"
                 />
                 <div className="flex space-x-2">
-                  <Button onClick={encodeURL} className="cyber-button">Encode</Button>
-                  <Button onClick={decodeURL} className="cyber-button">Decode</Button>
+                  <Button onClick={encodeURL} className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90">Encode</Button>
+                  <Button onClick={decodeURL} className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90">Decode</Button>
                 </div>
                 <Textarea
                   placeholder="Output will appear here..."
                   value={urlOutput}
                   readOnly
-                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
+                  className="bg-gray-800 border-accent-teal/30 text-accent-teal placeholder:text-gray-500"
                 />
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="base64" className="mt-6">
-            <Card className="glass-morphism border-neon-green/30">
+            <Card className="bg-gray-900 border-accent-teal/30">
               <CardHeader>
-                <CardTitle className="text-neon-green">Base64 Encoder/Decoder</CardTitle>
+                <CardTitle className="text-accent-teal">Base64 Encoder/Decoder</CardTitle>
                 <CardDescription className="text-gray-400">Encode or decode Base64 strings</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -141,26 +141,26 @@ const Tools = () => {
                   placeholder="Enter text to encode/decode..."
                   value={base64Input}
                   onChange={(e) => setBase64Input(e.target.value)}
-                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
+                  className="bg-gray-800 border-accent-teal/30 text-accent-teal placeholder:text-gray-500"
                 />
                 <div className="flex space-x-2">
-                  <Button onClick={encodeBase64} className="cyber-button">Encode</Button>
-                  <Button onClick={decodeBase64} className="cyber-button">Decode</Button>
+                  <Button onClick={encodeBase64} className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90">Encode</Button>
+                  <Button onClick={decodeBase64} className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90">Decode</Button>
                 </div>
                 <Textarea
                   placeholder="Output will appear here..."
                   value={base64Output}
                   readOnly
-                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
+                  className="bg-gray-800 border-accent-teal/30 text-accent-teal placeholder:text-gray-500"
                 />
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="cipher" className="mt-6">
-            <Card className="glass-morphism border-neon-green/30">
+            <Card className="bg-gray-900 border-accent-teal/30">
               <CardHeader>
-                <CardTitle className="text-neon-green">Cipher Identifier</CardTitle>
+                <CardTitle className="text-accent-teal">Cipher Identifier</CardTitle>
                 <CardDescription className="text-gray-400">Identify common cipher types</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -168,11 +168,11 @@ const Tools = () => {
                   placeholder="Enter cipher text to identify..."
                   value={cipherInput}
                   onChange={(e) => setCipherInput(e.target.value)}
-                  className="bg-cyber-dark border-neon-green/30 text-neon-green placeholder:text-gray-500"
+                  className="bg-gray-800 border-accent-teal/30 text-accent-teal placeholder:text-gray-500"
                 />
-                <Button onClick={identifyCipher} className="cyber-button">Identify Cipher</Button>
-                <div className="p-4 bg-cyber-dark border border-neon-green/30 rounded">
-                  <p className="text-neon-green font-mono">Possible cipher types:</p>
+                <Button onClick={identifyCipher} className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90">Identify Cipher</Button>
+                <div className="p-4 bg-gray-800 border border-accent-teal/30 rounded">
+                  <p className="text-accent-teal font-mono">Possible cipher types:</p>
                   <p className="text-white mt-2">{cipherResult}</p>
                 </div>
               </CardContent>
@@ -180,9 +180,9 @@ const Tools = () => {
           </TabsContent>
 
           <TabsContent value="compiler" className="mt-6">
-            <Card className="glass-morphism border-neon-green/30">
+            <Card className="bg-gray-900 border-accent-teal/30">
               <CardHeader>
-                <CardTitle className="text-neon-green">JavaScript Compiler</CardTitle>
+                <CardTitle className="text-accent-teal">JavaScript Compiler</CardTitle>
                 <CardDescription className="text-gray-400">Execute JavaScript code (client-side only)</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -190,12 +190,12 @@ const Tools = () => {
                   placeholder="Enter JavaScript code..."
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="bg-cyber-dark border-neon-green/30 text-neon-green font-mono placeholder:text-gray-500"
+                  className="bg-gray-800 border-accent-teal/30 text-accent-teal font-mono placeholder:text-gray-500"
                   rows={8}
                 />
-                <Button onClick={executeCode} className="cyber-button">Execute</Button>
-                <div className="p-4 bg-cyber-dark border border-neon-green/30 rounded">
-                  <p className="text-neon-green font-mono">Output:</p>
+                <Button onClick={executeCode} className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90">Execute</Button>
+                <div className="p-4 bg-gray-800 border border-accent-teal/30 rounded">
+                  <p className="text-accent-teal font-mono">Output:</p>
                   <pre className="text-white mt-2 font-mono whitespace-pre-wrap">{codeOutput}</pre>
                 </div>
               </CardContent>
@@ -204,60 +204,60 @@ const Tools = () => {
 
           <TabsContent value="external" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="glass-morphism border-neon-green/30">
+              <Card className="bg-gray-900 border-accent-teal/30">
                 <CardHeader>
-                  <CardTitle className="text-neon-green">CyberChef</CardTitle>
+                  <CardTitle className="text-accent-teal">CyberChef</CardTitle>
                   <CardDescription className="text-gray-400">Advanced data manipulation toolkit</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Button 
                     onClick={() => window.open('https://gchq.github.io/CyberChef/', '_blank')}
-                    className="cyber-button w-full"
+                    className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90 w-full"
                   >
                     Open CyberChef
                   </Button>
                 </CardContent>
               </Card>
 
-              <Card className="glass-morphism border-neon-green/30">
+              <Card className="bg-gray-900 border-accent-teal/30">
                 <CardHeader>
-                  <CardTitle className="text-neon-green">RevShells</CardTitle>
+                  <CardTitle className="text-accent-teal">RevShells</CardTitle>
                   <CardDescription className="text-gray-400">Reverse shell generator</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Button 
                     onClick={() => window.open('https://www.revshells.com/', '_blank')}
-                    className="cyber-button w-full"
+                    className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90 w-full"
                   >
                     Open RevShells
                   </Button>
                 </CardContent>
               </Card>
 
-              <Card className="glass-morphism border-neon-green/30">
+              <Card className="bg-gray-900 border-accent-teal/30">
                 <CardHeader>
-                  <CardTitle className="text-neon-green">Decode.fr</CardTitle>
+                  <CardTitle className="text-accent-teal">Decode.fr</CardTitle>
                   <CardDescription className="text-gray-400">Multi-format decoder</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Button 
                     onClick={() => window.open('https://www.decode.fr/', '_blank')}
-                    className="cyber-button w-full"
+                    className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90 w-full"
                   >
                     Open Decode.fr
                   </Button>
                 </CardContent>
               </Card>
 
-              <Card className="glass-morphism border-neon-green/30">
+              <Card className="bg-gray-900 border-accent-teal/30">
                 <CardHeader>
-                  <CardTitle className="text-neon-green">Regex101</CardTitle>
+                  <CardTitle className="text-accent-teal">Regex101</CardTitle>
                   <CardDescription className="text-gray-400">Regular expression tester</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Button 
                     onClick={() => window.open('https://regex101.com/', '_blank')}
-                    className="cyber-button w-full"
+                    className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90 w-full"
                   >
                     Open Regex101
                   </Button>

@@ -1,122 +1,115 @@
 
 import { useState } from "react";
-import { ExternalLink, Github, FileText } from "lucide-react";
+import { ExternalLink, Calendar, Tag } from "lucide-react";
 
 interface HackItem {
   id: number;
   title: string;
   description: string;
-  category: string;
   url: string;
-  type: 'writeup' | 'tool' | 'note';
+  category: string;
+  date: string;
+  tags: string[];
 }
 
 const hackItems: HackItem[] = [
   {
     id: 1,
-    title: "TryHackMe: Buffer Overflow Prep",
-    description: "Complete walkthrough of buffer overflow techniques and exploitation methods",
-    category: "Binary Exploitation",
+    title: "TryHackMe - Pickle Rick",
+    description: "Web exploitation room featuring command injection and privilege escalation",
     url: "#",
-    type: "writeup"
+    category: "CTF Writeup",
+    date: "2024-01-15",
+    tags: ["Web", "Command Injection", "Linux"]
   },
   {
     id: 2,
-    title: "Burp Suite Extensions Guide",
-    description: "Essential extensions for web application security testing",
-    category: "Web Security",
+    title: "HackTheBox - Lame",
+    description: "Classic Linux box involving Samba exploitation and distcc vulnerability",
     url: "#",
-    type: "tool"
+    category: "CTF Writeup",
+    date: "2024-01-10",
+    tags: ["Linux", "SMB", "Privilege Escalation"]
   },
   {
     id: 3,
-    title: "Active Directory Enumeration",
-    description: "PowerShell and BloodHound techniques for AD reconnaissance",
-    category: "Red Team",
+    title: "Burp Suite Cheat Sheet",
+    description: "Comprehensive guide for web application testing with Burp Suite",
     url: "#",
-    type: "note"
+    category: "Tool",
+    date: "2024-01-08",
+    tags: ["Web", "Burp Suite", "Testing"]
   },
   {
     id: 4,
-    title: "HackTheBox: Retired Machines",
-    description: "Collection of detailed writeups for retired HTB machines",
-    category: "Penetration Testing",
+    title: "SQL Injection Payloads",
+    description: "Collection of SQL injection payloads for different database systems",
     url: "#",
-    type: "writeup"
+    category: "Resource",
+    date: "2024-01-05",
+    tags: ["SQL", "Web", "Database"]
   },
   {
     id: 5,
-    title: "Custom Payload Generator",
-    description: "Python script for generating custom shellcode payloads",
-    category: "Tool Development",
+    title: "Nmap Scanning Techniques",
+    description: "Advanced network reconnaissance using Nmap with stealth techniques",
     url: "#",
-    type: "tool"
+    category: "Tool",
+    date: "2024-01-03",
+    tags: ["Network", "Reconnaissance", "Nmap"]
   },
   {
     id: 6,
-    title: "OSCP Methodology Notes",
-    description: "Personal notes and methodology for OSCP preparation",
-    category: "Certification",
+    title: "Buffer Overflow Basics",
+    description: "Step-by-step guide to understanding and exploiting buffer overflows",
     url: "#",
-    type: "note"
+    category: "Tutorial",
+    date: "2024-01-01",
+    tags: ["Binary", "Exploitation", "Assembly"]
   }
 ];
 
-const Hacks = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+const categories = ["All", "CTF Writeup", "Tool", "Resource", "Tutorial"];
 
-  const categories = [...new Set(hackItems.map(item => item.category))];
-  const types = [...new Set(hackItems.map(item => item.type))];
+const Hacks = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredItems = hackItems.filter(item => {
-    const categoryMatch = !selectedCategory || item.category === selectedCategory;
-    const typeMatch = !selectedType || item.type === selectedType;
-    return categoryMatch && typeMatch;
+    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
+    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    return matchesCategory && matchesSearch;
   });
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'writeup':
-        return <FileText className="w-4 h-4" />;
-      case 'tool':
-        return <Github className="w-4 h-4" />;
-      case 'note':
-        return <ExternalLink className="w-4 h-4" />;
-      default:
-        return <FileText className="w-4 h-4" />;
-    }
-  };
 
   return (
     <div className="min-h-screen bg-dark-bg text-gray-100">
-      <div className="container mx-auto px-6 py-8">
+      <div className="container mx-auto px-6 py-8 max-w-6xl">
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-white mb-4">Hacks & Writeups</h1>
-          <p className="text-gray-400 text-lg">
-            Collection of security research, writeups, and tools
+          <p className="text-gray-400 text-lg max-w-2xl">
+            A curated collection of CTF writeups, security tools, and hacking resources
           </p>
         </div>
 
-        {/* Filters */}
-        <div className="mb-8 flex flex-wrap gap-4">
+        {/* Search and Filter */}
+        <div className="mb-8 space-y-4">
+          <input
+            type="text"
+            placeholder="Search hacks, tools, and writeups..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-gray-300 placeholder-gray-500 focus:outline-none focus:border-accent-teal transition-colors"
+          />
+          
           <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setSelectedCategory(null)}
-              className={`px-3 py-1 rounded-full text-sm font-mono transition-colors ${
-                !selectedCategory 
-                  ? 'bg-accent-teal text-dark-bg' 
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-              }`}
-            >
-              All Categories
-            </button>
             {categories.map(category => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-1 rounded-full text-sm font-mono transition-colors ${
+                className={`px-4 py-2 rounded-full text-sm font-mono transition-colors ${
                   selectedCategory === category
                     ? 'bg-accent-teal text-dark-bg'
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
@@ -126,78 +119,68 @@ const Hacks = () => {
               </button>
             ))}
           </div>
-          
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setSelectedType(null)}
-              className={`px-3 py-1 rounded-full text-sm font-mono transition-colors ${
-                !selectedType 
-                  ? 'bg-accent-teal text-dark-bg' 
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-              }`}
-            >
-              All Types
-            </button>
-            {types.map(type => (
-              <button
-                key={type}
-                onClick={() => setSelectedType(type)}
-                className={`px-3 py-1 rounded-full text-sm font-mono transition-colors capitalize ${
-                  selectedType === type
-                    ? 'bg-accent-teal text-dark-bg'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Items Grid */}
-        <div className="grid gap-4">
-          {filteredItems.map(item => (
-            <a
+        <div className="grid gap-4 md:gap-6">
+          {filteredItems.map((item) => (
+            <div
               key={item.id}
-              href={item.url}
-              className="group bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-accent-teal transition-all duration-200 block"
+              className="group bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-accent-teal/50 transition-all duration-200 hover:transform hover:scale-[1.02]"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="text-accent-teal">
-                      {getTypeIcon(item.type)}
-                    </div>
-                    <h3 className="text-lg font-semibold text-white group-hover:text-accent-teal transition-colors">
+                    <h2 className="text-xl font-semibold text-white group-hover:text-accent-teal transition-colors">
                       {item.title}
-                    </h3>
+                    </h2>
+                    <ExternalLink className="w-4 h-4 text-gray-500 group-hover:text-accent-teal transition-colors" />
                   </div>
                   
-                  <p className="text-gray-400 mb-3 leading-relaxed">
+                  <p className="text-gray-400 mb-4 leading-relaxed">
                     {item.description}
                   </p>
                   
-                  <div className="flex items-center gap-4">
-                    <span className="px-2 py-1 bg-gray-800 text-gray-300 rounded text-xs font-mono">
+                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      <span>{item.date}</span>
+                    </div>
+                    <span className="px-2 py-1 bg-gray-800 rounded text-accent-teal font-mono text-xs">
                       {item.category}
                     </span>
-                    <span className="px-2 py-1 bg-accent-teal/20 text-accent-teal rounded text-xs font-mono capitalize">
-                      {item.type}
-                    </span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Tag className="w-4 h-4 text-gray-500" />
+                    <div className="flex flex-wrap gap-1">
+                      {item.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-1 bg-accent-teal/10 text-accent-teal rounded text-xs font-mono"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                
-                <div className="text-gray-500 group-hover:text-accent-teal transition-colors ml-4">
-                  <ExternalLink className="w-5 h-5" />
-                </div>
               </div>
-            </a>
+              
+              <a
+                href={item.url}
+                className="absolute inset-0 rounded-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Read ${item.title}`}
+              />
+            </div>
           ))}
         </div>
 
         {filteredItems.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 font-mono">No items found for the selected filters.</p>
+            <p className="text-gray-500 font-mono">No items found matching your criteria.</p>
           </div>
         )}
       </div>
