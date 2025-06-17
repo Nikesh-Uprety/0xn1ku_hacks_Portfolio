@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import FloatingNav from "@/components/FloatingNav";
+import { CustomCursor } from "@/components/CustomCursor";
 import Index from "./pages/Index";
 import Blogs from "./pages/Blogs";
 import Tools from "./pages/Tools";
@@ -23,7 +24,8 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="min-h-screen flex w-full">
+          <div className="min-h-screen flex w-full cursor-none">
+            <CustomCursor />
             <main className="flex-1">
               <Routes>
                 <Route path="/" element={<Index />} />
