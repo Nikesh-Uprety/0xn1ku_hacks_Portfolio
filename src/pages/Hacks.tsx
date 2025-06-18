@@ -1,201 +1,271 @@
+
 import { useState } from "react";
-import { ExternalLink, Calendar, Tag, Search, Filter } from "lucide-react";
+import { Search } from "lucide-react";
 
 interface HackItem {
   id: number;
   title: string;
-  description: string;
   url: string;
   category: string;
-  date: string;
-  tags: string[];
-  featured?: boolean;
+  favicon?: string;
 }
 
 const hackItems: HackItem[] = [
   {
     id: 1,
-    title: "TryHackMe - Pickle Rick",
-    description: "Web exploitation room featuring command injection and privilege escalation techniques",
-    url: "#",
-    category: "CTF Writeup",
-    date: "2024-01-15",
-    tags: ["Web", "Command Injection", "Linux"],
-    featured: true
+    title: "TryHackMe",
+    url: "https://tryhackme.com",
+    category: "platforms",
+    favicon: "🎯"
   },
   {
     id: 2,
-    title: "HackTheBox - Lame",
-    description: "Classic Linux box involving Samba exploitation and distcc vulnerability analysis",
-    url: "#",
-    category: "CTF Writeup",
-    date: "2024-01-10",
-    tags: ["Linux", "SMB", "Privilege Escalation"],
-    featured: true
+    title: "HackTheBox",
+    url: "https://hackthebox.com",
+    category: "platforms",
+    favicon: "📦"
   },
   {
     id: 3,
-    title: "Burp Suite Professional Guide",
-    description: "Comprehensive guide for advanced web application testing with Burp Suite",
-    url: "#",
-    category: "Tool Guide",
-    date: "2024-01-08",
-    tags: ["Web", "Burp Suite", "Testing"]
+    title: "OverTheWire",
+    url: "https://overthewire.org",
+    category: "platforms",
+    favicon: "⚡"
   },
   {
     id: 4,
-    title: "SQL Injection Payload Collection",
-    description: "Curated collection of SQL injection payloads for different database systems",
-    url: "#",
-    category: "Resource",
-    date: "2024-01-05",
-    tags: ["SQL", "Web", "Database"]
+    title: "PicoCTF",
+    url: "https://picoctf.org",
+    category: "platforms",
+    favicon: "🚩"
   },
   {
     id: 5,
-    title: "Advanced Nmap Techniques",
-    description: "Network reconnaissance using Nmap with stealth and evasion techniques",
-    url: "#",
-    category: "Tool Guide",
-    date: "2024-01-03",
-    tags: ["Network", "Reconnaissance", "Nmap"]
+    title: "Burp Suite",
+    url: "https://portswigger.net/burp",
+    category: "tools",
+    favicon: "🔧"
   },
   {
     id: 6,
-    title: "Buffer Overflow Fundamentals",
-    description: "Step-by-step guide to understanding and exploiting stack-based buffer overflows",
-    url: "#",
-    category: "Tutorial",
-    date: "2024-01-01",
-    tags: ["Binary", "Exploitation", "Assembly"]
+    title: "Nmap",
+    url: "https://nmap.org",
+    category: "tools",
+    favicon: "🗺️"
   },
   {
     id: 7,
-    title: "OSCP Lab Notes",
-    description: "Personal notes and methodologies from OSCP lab environment",
-    url: "#",
-    category: "Notes",
-    date: "2023-12-28",
-    tags: ["OSCP", "Methodology", "Notes"]
+    title: "Metasploit",
+    url: "https://metasploit.com",
+    category: "tools",
+    favicon: "💥"
   },
   {
     id: 8,
-    title: "Active Directory Enumeration",
-    description: "Comprehensive guide to AD enumeration and attack vectors",
+    title: "Wireshark",
+    url: "https://wireshark.org",
+    category: "tools",
+    favicon: "🦈"
+  },
+  {
+    id: 9,
+    title: "John the Ripper",
+    url: "https://www.openwall.com/john/",
+    category: "tools",
+    favicon: "🔓"
+  },
+  {
+    id: 10,
+    title: "OWASP Top 10",
+    url: "https://owasp.org/www-project-top-ten/",
+    category: "resources",
+    favicon: "📚"
+  },
+  {
+    id: 11,
+    title: "CWE Database",
+    url: "https://cwe.mitre.org",
+    category: "resources",
+    favicon: "🗂️"
+  },
+  {
+    id: 12,
+    title: "CVE Details",
+    url: "https://cvedetails.com",
+    category: "resources",
+    favicon: "🔍"
+  },
+  {
+    id: 13,
+    title: "Exploit Database",
+    url: "https://exploit-db.com",
+    category: "resources",
+    favicon: "💣"
+  },
+  {
+    id: 14,
+    title: "Buffer Overflow Guide",
     url: "#",
-    category: "Tutorial",
-    date: "2023-12-25",
-    tags: ["Active Directory", "Windows", "Enumeration"]
+    category: "writeups",
+    favicon: "📝"
+  },
+  {
+    id: 15,
+    title: "SQL Injection Techniques",
+    url: "#",
+    category: "writeups",
+    favicon: "💉"
+  },
+  {
+    id: 16,
+    title: "Web Application Testing",
+    url: "#",
+    category: "writeups",
+    favicon: "🌐"
+  },
+  {
+    id: 17,
+    title: "Active Directory Attacks",
+    url: "#",
+    category: "writeups",
+    favicon: "🏢"
   }
 ];
 
-const categories = ["All", "CTF Writeup", "Tool Guide", "Resource", "Tutorial", "Notes"];
+const categories = [
+  { key: "all", label: "all" },
+  { key: "platforms", label: "platforms" },
+  { key: "tools", label: "tools" },
+  { key: "resources", label: "resources" },
+  { key: "writeups", label: "writeups" }
+];
 
 const Hacks = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredItems = hackItems.filter(item => {
-    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
+    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  const featuredItems = filteredItems.filter(item => item.featured);
-  const regularItems = filteredItems.filter(item => !item.featured);
+  const groupedItems = categories.reduce((acc, category) => {
+    if (category.key === "all") return acc;
+    
+    const items = filteredItems.filter(item => item.category === category.key);
+    if (items.length > 0) {
+      acc[category.key] = items;
+    }
+    return acc;
+  }, {} as Record<string, HackItem[]>);
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-4xl mx-auto px-6 py-16">
+    <div className="min-h-screen bg-dark-bg text-foreground">
+      <div className="max-w-2xl mx-auto px-6 py-16">
         {/* Header */}
-        <div className="mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Bookmarks
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-white mb-4 font-mono">
+            bookmarks
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl">
-            A curated collection of CTF writeups, security tools, and penetration testing resources I find useful.
+          <p className="text-muted-foreground text-lg">
+            a collection of interesting links, articles, and resources I've saved
           </p>
         </div>
 
-        {/* Search and Filter */}
-        <div className="mb-12 space-y-6">
-          {/* Search */}
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        {/* Search */}
+        <div className="mb-8">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <input
               type="text"
               placeholder="Search bookmarks..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 transition-all text-sm"
+              className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-foreground placeholder:text-muted-foreground transition-all"
             />
-          </div>
-          
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map(category => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-1 rounded-md text-sm transition-all ${
-                  selectedCategory === category
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
           </div>
         </div>
 
-        {/* Items List */}
-        <div className="space-y-1">
-          {filteredItems.map((item) => (
-            <a
-              key={item.id}
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block p-4 rounded-md hover:bg-gray-50 transition-colors duration-150"
+        {/* Category Filter */}
+        <div className="flex flex-wrap gap-3 mb-12">
+          {categories.map(category => (
+            <button
+              key={category.key}
+              onClick={() => setSelectedCategory(category.key)}
+              className={`px-4 py-2 rounded-lg text-sm font-mono transition-all ${
+                selectedCategory === category.key
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-card'
+              }`}
             >
-              <div className="flex items-start justify-between">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <h3 className="text-base font-medium text-gray-900 group-hover:text-gray-700 transition-colors">
-                      {item.title}
-                    </h3>
-                    <ExternalLink className="w-3 h-3 text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0" />
-                  </div>
-                  
-                  <p className="text-sm text-gray-600 mb-2 leading-relaxed">
-                    {item.description}
-                  </p>
-                  
-                  <div className="flex items-center space-x-3 text-xs text-gray-500">
-                    <span className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded">
-                      {item.category}
-                    </span>
-                    <span>{item.date}</span>
-                    <div className="flex items-center space-x-1">
-                      <span>{item.tags.join(" • ")}</span>
-                    </div>
-                  </div>
+              {category.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Bookmarks */}
+        <div className="space-y-12">
+          {selectedCategory === "all" ? (
+            Object.entries(groupedItems).map(([categoryKey, items]) => (
+              <div key={categoryKey}>
+                <h2 className="text-2xl font-bold text-white mb-6 font-mono">
+                  {categoryKey}
+                </h2>
+                <div className="space-y-1">
+                  {items.map((item) => (
+                    <a
+                      key={item.id}
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-all duration-200"
+                    >
+                      <span className="text-lg flex-shrink-0" role="img" aria-label="favicon">
+                        {item.favicon}
+                      </span>
+                      <span className="text-foreground group-hover:text-primary transition-colors font-mono">
+                        {item.title}
+                      </span>
+                    </a>
+                  ))}
                 </div>
               </div>
-            </a>
-          ))}
+            ))
+          ) : (
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-6 font-mono">
+                {selectedCategory}
+              </h2>
+              <div className="space-y-1">
+                {filteredItems.map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-all duration-200"
+                  >
+                    <span className="text-lg flex-shrink-0" role="img" aria-label="favicon">
+                      {item.favicon}
+                    </span>
+                    <span className="text-foreground group-hover:text-primary transition-colors font-mono">
+                      {item.title}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {filteredItems.length === 0 && (
           <div className="text-center py-16">
-            <div className="text-gray-400 mb-4">
+            <div className="text-muted-foreground mb-4">
               <Search className="w-8 h-8 mx-auto" />
             </div>
-            <h3 className="text-base font-medium text-gray-900 mb-2">No bookmarks found</h3>
-            <p className="text-sm text-gray-600">Try adjusting your search or filter criteria.</p>
+            <h3 className="text-lg font-medium text-foreground mb-2 font-mono">No bookmarks found</h3>
+            <p className="text-muted-foreground">Try adjusting your search or filter criteria.</p>
           </div>
         )}
       </div>
