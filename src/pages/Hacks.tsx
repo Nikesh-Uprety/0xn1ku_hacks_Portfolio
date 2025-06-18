@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Search } from "lucide-react";
 
@@ -170,11 +171,10 @@ const Hacks = () => {
     if (item.favicon?.startsWith('https://')) {
       return (
         <img 
-          src={item.favicon} 
+          src={`https://www.google.com/s2/favicons?domain=${new URL(item.url).hostname}&sz=16`}
           alt=""
           className="w-4 h-4 flex-shrink-0"
           onError={(e) => {
-            // Fallback to a default icon if favicon fails to load
             const target = e.target as HTMLImageElement;
             target.style.display = 'none';
             target.nextElementSibling?.classList.remove('hidden');
@@ -234,11 +234,11 @@ const Hacks = () => {
         </div>
 
         {/* Bookmarks */}
-        <div className="space-y-12">
+        <div className="space-y-8">
           {selectedCategory === "all" ? (
             Object.entries(groupedItems).map(([categoryKey, items]) => (
               <div key={categoryKey}>
-                <h2 className="text-2xl font-bold text-white mb-6 font-mono">
+                <h2 className="text-xl font-bold text-white mb-3 font-mono">
                   {categoryKey}
                 </h2>
                 <div className="space-y-1">
@@ -248,11 +248,11 @@ const Hacks = () => {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center space-x-3 p-3 rounded-lg hover:bg-[#1a1f2e]/50 transition-all duration-200"
+                      className="group flex items-center space-x-3 py-1.5 px-2 -mx-2 rounded hover:bg-[#1a1f2e]/50 transition-all duration-200"
                     >
                       {renderFavicon(item)}
                       <span className="hidden text-sm">🔗</span>
-                      <span className="text-gray-300 group-hover:text-[#64ffda] transition-colors font-mono">
+                      <span className="text-gray-300 group-hover:text-[#64ffda] transition-colors font-mono text-sm">
                         {item.title}
                       </span>
                     </a>
@@ -262,7 +262,7 @@ const Hacks = () => {
             ))
           ) : (
             <div>
-              <h2 className="text-2xl font-bold text-white mb-6 font-mono">
+              <h2 className="text-xl font-bold text-white mb-3 font-mono">
                 {selectedCategory}
               </h2>
               <div className="space-y-1">
@@ -272,11 +272,11 @@ const Hacks = () => {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center space-x-3 p-3 rounded-lg hover:bg-[#1a1f2e]/50 transition-all duration-200"
+                    className="group flex items-center space-x-3 py-1.5 px-2 -mx-2 rounded hover:bg-[#1a1f2e]/50 transition-all duration-200"
                   >
                     {renderFavicon(item)}
                     <span className="hidden text-sm">🔗</span>
-                    <span className="text-gray-300 group-hover:text-[#64ffda] transition-colors font-mono">
+                    <span className="text-gray-300 group-hover:text-[#64ffda] transition-colors font-mono text-sm">
                       {item.title}
                     </span>
                   </a>
