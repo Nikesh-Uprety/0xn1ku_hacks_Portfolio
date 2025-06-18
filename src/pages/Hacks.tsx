@@ -104,27 +104,34 @@ const hackItems: HackItem[] = [
   },
   {
     id: 14,
+    title: "Super Specific Feedback: How to give actionable feedback on work output",
+    url: "https://newsletter.weskao.com/p/super-specific-feedback",
+    category: "resources",
+    favicon: "💬"
+  },
+  {
+    id: 15,
     title: "Buffer Overflow Guide",
     url: "#",
     category: "writeups",
     favicon: "📝"
   },
   {
-    id: 15,
+    id: 16,
     title: "SQL Injection Techniques",
     url: "#",
     category: "writeups",
     favicon: "💉"
   },
   {
-    id: 16,
+    id: 17,
     title: "Web Application Testing",
     url: "#",
     category: "writeups",
     favicon: "🌐"
   },
   {
-    id: 17,
+    id: 18,
     title: "Active Directory Attacks",
     url: "#",
     category: "writeups",
