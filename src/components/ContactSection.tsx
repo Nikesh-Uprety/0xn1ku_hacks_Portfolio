@@ -1,16 +1,44 @@
-
 import { useState } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
 
 export const ContactSection = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = "Contact from Portfolio";
-    const body = `${message}\n\nFrom: ${email}`;
-    window.open(`mailto:upretynikesh021@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+    e.stopPropagation();
+
+    try {
+      const res = await fetch("https://formcarry.com/s/UwLZVcSkR-2", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          message,
+          name: "Portfolio Visitor", // Optional static value for name
+        }),
+      });
+
+      const response = await res.json();
+
+      if (response.code === 200) {
+        alert("We received your submission, thank you!");
+        setEmail("");
+        setMessage("");
+        setError("");
+      } else if (response.code === 422) {
+        setError(response.message);
+      } else {
+        setError(response.message || "Something went wrong. Try again later.");
+      }
+    } catch (err: any) {
+      setError(err.message || "Network error occurred.");
+    }
   };
 
   return (
@@ -93,13 +121,7 @@ export const ContactSection = () => {
           </div>
 
           <div>
-            <form
-              onSubmit={handleSubmit}
-              action="https://formcarry.com/s/UwLZVcSkR-2"
-              method="POST"
-              encType="multipart/form-data"
-              className="space-y-4"
-            >
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label
                   htmlFor="email"
@@ -134,6 +156,7 @@ export const ContactSection = () => {
                   placeholder="Your message here..."
                 />
               </div>
+              {error && <p className="text-red-500 text-sm">{error}</p>}
               <button
                 type="submit"
                 className="w-full bg-accent-teal text-dark-bg px-6 py-3 rounded-lg font-medium hover:bg-accent-teal/90 transition-colors"
