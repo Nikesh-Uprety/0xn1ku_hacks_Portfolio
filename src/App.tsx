@@ -26,6 +26,7 @@ const App = () => (
         <BrowserRouter>
           <div className="min-h-screen flex w-full relative">
             <CustomCursor />
+            {/* <CursorGlow /> */}
             <main className="flex-1 relative z-10">
               <Routes>
                 <Route path="/" element={<Index />} />
