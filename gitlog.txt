@@ -1,0 +1,73 @@
+1262067  Manual Fixed App.txt Routes Error
+deb705b Fix: Use Index page for home route
+3d7f47f Run Supabase schema migrations
+b1917aa Connect to Supabase project
+bd1a47b update form handler v2
+2f686f4 addded form halder api
+275b247 Fix: Adjust spacing in /hacks page
+bedf3e2 feat: Implement favicon API for /hacks page
+87fc57b Add resource link to /hacks page
+b941455 Refactor: Redesign /hacks page
+f46489f img-link-tweaked-routes-conflit-fixed
+9b2cdb2 Clean Minimalist Hacks Page Redesign
+61cc7fe Redesign Hacks Page with Clean Layout
+fda5f90 Updated package-lock.json
+95df823 Fix: Tools page input text color
+d37bd1d Fix UI bugs and implement redesigns
+be4ea5f Add dual-layer custom cursor effect
+01abd9e Add background gradient glow and hover animations
+5db2c02 Add custom cursor with animation
+2e66ebf tweaks
+cfed191 Fix build errors
+0231433 Refactor: Implement dark theme and redesign portfolio
+e82d9a1 Fix: Route navigation issue
+c7d2122 Fix: Resolve runtime errors
+7bc6257 Implement backend API routes and database CRUD operations
+b42fab5 Reverted to commit 13244a9af53b314dbf967fbbf5026d51eddae0aa
+8b2fc52 Refactor scanner header
+13244a9 Refactor scanner command
+3f15216 Move scanner container
+e1e76c9 Move scanner container and adjust spacing
+00d2f23 Refactor scanner container layout
+0e6ba1c Refactor scanner layout
+53c27e5 Refactor scanner layout
+a488e40 Refactor scanner output
+08d67f0 Refactor: Scanner layout to match Kali terminal
+b3003e7 Remove mouse cursor animation
+399dbf5 Refactor: Reduce font size and improve readability
+15938d5 Fix: Secret key authentication
+49bfca0 Remove "CTF" from tools page title
+634d78a Add /tools route to scanner and other pages
+c484910 Remove duplicate /home button
+e60a2af Refactor: Display routes inline on non-home pages
+34cb643 feat: Show routes on non-home pages
+c2bda49 Fix: Decoding effect for /FUZZ
+eca9c68 Fix: Decoding effect on FUZZ button
+5664722 feat: Add decoding effect on hover
+749ac83 Fix: Prevent re-rendering of scan results
+8ea77a9 Remove scan complete text
+ab6caec Fix: Restore button layout and clickable routes
+3f60868 Fix: Restore button style after scan
+6c784ae feat: Implement API brute-force simulation
+7ea3bfa Refactor UI and add image optimization
+a559380 Fix frontend glitches and implement backend API
+a420714 Implement UI/UX and security enhancements
+26c0c39 Fix: Invalid secret key message
+707480f Add API routes, blog, tools, secret, and quick links features.
+b2b1851 updatefavicon
+d6fba1c Fix: Improve terminal scroll appearance
+2b7b23c Fix mouse cursor, image hover, and typewriter.
+02bf789 Fix: Typewriter effect and mouse tracking
+ca86da2 Refactor: Improve responsiveness and UI
+8cf31de Fix terminal scroll, add close function, and more
+e2a8dbe changed image
+97c9b20 some changes on ui
+a4332f2 Update README.md
+47105f0 Fix: Mouse cursor in terminal and terminal UI
+b8d5cce Add featured projects and improve mouse hover
+c3da0cc Refactor: Enhance mouse cursor effect
+5910648 Add mouse cursor effect
+4317d1e Fix: Resolve duplicate Monitor component
+1ae93ea Fix: Terminal import error
+c096b4e Implement hacker-style portfolio website
+15b65b3 Use tech stack vite_react_shadcn_ts

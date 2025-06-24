@@ -52,7 +52,7 @@ const Tools = () => {
 
   const identifyCipher = () => {
     const input = cipherInput.toLowerCase();
-    let results = [];
+    const results = [];
 
     // Basic cipher identification
     if (/^[01\s]+$/.test(input.replace(/\s/g, ''))) {
@@ -99,8 +99,8 @@ const Tools = () => {
             <TabsTrigger value="url" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">URL Codec</TabsTrigger>
             <TabsTrigger value="base64" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">Base64</TabsTrigger>
             <TabsTrigger value="cipher" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">Cipher ID</TabsTrigger>
-            <TabsTrigger value="compiler" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">Compiler</TabsTrigger>
-            <TabsTrigger value="external" className="data-[state=active]:bg-accent-teal/20 data-[state=active]:text-accent-teal">External</TabsTrigger>
+            
+            
           </TabsList>
 
           <TabsContent value="url" className="mt-6">
@@ -177,93 +177,6 @@ const Tools = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
-
-          <TabsContent value="compiler" className="mt-6">
-            <Card className="bg-gray-900 border-accent-teal/30">
-              <CardHeader>
-                <CardTitle className="text-accent-teal">JavaScript Compiler</CardTitle>
-                <CardDescription className="text-gray-400">Execute JavaScript code (client-side only)</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Textarea
-                  placeholder="Enter JavaScript code..."
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="bg-gray-800 border-accent-teal/30 text-accent-teal font-mono placeholder:text-gray-500"
-                  rows={8}
-                />
-                <Button onClick={executeCode} className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90">Execute</Button>
-                <div className="p-4 bg-gray-800 border border-accent-teal/30 rounded">
-                  <p className="text-accent-teal font-mono">Output:</p>
-                  <pre className="text-white mt-2 font-mono whitespace-pre-wrap">{codeOutput}</pre>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="external" className="mt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="bg-gray-900 border-accent-teal/30">
-                <CardHeader>
-                  <CardTitle className="text-accent-teal">CyberChef</CardTitle>
-                  <CardDescription className="text-gray-400">Advanced data manipulation toolkit</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    onClick={() => window.open('https://gchq.github.io/CyberChef/', '_blank')}
-                    className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90 w-full"
-                  >
-                    Open CyberChef
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-900 border-accent-teal/30">
-                <CardHeader>
-                  <CardTitle className="text-accent-teal">RevShells</CardTitle>
-                  <CardDescription className="text-gray-400">Reverse shell generator</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    onClick={() => window.open('https://www.revshells.com/', '_blank')}
-                    className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90 w-full"
-                  >
-                    Open RevShells
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-900 border-accent-teal/30">
-                <CardHeader>
-                  <CardTitle className="text-accent-teal">Decode.fr</CardTitle>
-                  <CardDescription className="text-gray-400">Multi-format decoder</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    onClick={() => window.open('https://www.decode.fr/', '_blank')}
-                    className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90 w-full"
-                  >
-                    Open Decode.fr
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gray-900 border-accent-teal/30">
-                <CardHeader>
-                  <CardTitle className="text-accent-teal">Regex101</CardTitle>
-                  <CardDescription className="text-gray-400">Regular expression tester</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button 
-                    onClick={() => window.open('https://regex101.com/', '_blank')}
-                    className="bg-accent-teal text-dark-bg hover:bg-accent-teal/90 w-full"
-                  >
-                    Open Regex101
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
           </TabsContent>
         </Tabs>
       </div>

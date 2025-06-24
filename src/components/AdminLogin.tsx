@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Shield, Lock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
+
 interface AdminLoginProps {
   onSuccess?: () => void;
 }
@@ -60,10 +61,10 @@ export const AdminLogin = ({ onSuccess }: AdminLoginProps) => {
             placeholder="admin@nikesh.dev"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-cyber-dark border-neon-green/50 text-white"
+            className="bg-gray-800 border-accent-teal/30 text-accent-teal placeholder:text-gray-500"
           />
         </div>
-        
+
         <div className="space-y-2">
           <label className="text-sm font-mono text-neon-green">Password</label>
           <div className="relative">
@@ -72,26 +73,30 @@ export const AdminLogin = ({ onSuccess }: AdminLoginProps) => {
               placeholder="Enter admin password..."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-cyber-dark border-neon-green/50 text-white pr-10"
-              onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+              className="bg-gray-800 border-accent-teal/30 text-accent-teal placeholder:text-gray-500"
+              onKeyPress={(e) => e.key === "Enter" && handleLogin()}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
             >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPassword ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
             </button>
           </div>
         </div>
-        
-        <Button 
+
+        <Button
           onClick={handleLogin}
           disabled={loading}
           className="w-full bg-neon-green hover:bg-neon-green/80 text-black border border-neon-green"
         >
           <Lock className="w-4 h-4 mr-2" />
-          {loading ? 'AUTHENTICATING...' : 'AUTHENTICATE'}
+          {loading ? "AUTHENTICATING..." : "AUTHENTICATE"}
         </Button>
       </CardContent>
     </Card>
