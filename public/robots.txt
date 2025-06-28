@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+FLAG = {WOW_YOU_ARE_NOT_ALLOWED_DON'T_INTERFERE}
