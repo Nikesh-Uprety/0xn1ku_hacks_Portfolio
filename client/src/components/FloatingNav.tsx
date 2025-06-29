@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useRoute } from "wouter";
 import { DecodingText } from "./DecodingText";
 import { BruteforceSimulation } from "./BruteforceSimulation";
 
@@ -8,8 +8,7 @@ const FloatingNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showBruteforce, setShowBruteforce] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [location, navigate] = useLocation();
 
   const routes = [
     { path: "/blogs", label: "/blogs", color: "text-neon-green" },
@@ -18,7 +17,7 @@ const FloatingNav = () => {
     { path: "/secret", label: "/secret", color: "text-red-500" },
   ];
 
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location === "/";
 
   const handleButtonClick = () => {
     if (isHomePage) {
@@ -52,7 +51,7 @@ const FloatingNav = () => {
       {!isHomePage && !showBruteforce && (
         <div className="flex flex-col space-y-2 mb-2">
           {routes
-            .filter(route => route.path !== location.pathname)
+            .filter(route => route.path !== location)
             .map((route) => (
               <button
                 key={route.path}

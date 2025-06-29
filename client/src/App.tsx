@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Router, Route, Switch } from "wouter";
 import { AuthProvider } from "@/hooks/useAuth";
 import FloatingNav from "@/components/FloatingNav";
 import { CursorGlow } from "@/components/CursorGlow";
@@ -23,24 +23,24 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <Router>
           <div className="min-h-screen flex w-full relative">
             <CustomCursor />
             {/* <CursorGlow /> */}
             <main className="flex-1 relative z-10">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route path="/tools" element={<Tools />} />
-                <Route path="/secret" element={<Secret />} />
-                <Route path="/hacks" element={<Hacks />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <Switch>
+                <Route path="/" component={Index} />
+                <Route path="/blogs" component={Blogs} />
+                <Route path="/tools" component={Tools} />
+                <Route path="/secret" component={Secret} />
+                <Route path="/hacks" component={Hacks} />
+                <Route path="/admin" component={Admin} />
+                <Route component={NotFound} />
+              </Switch>
             </main>
             <FloatingNav />
           </div>
-        </BrowserRouter>
+        </Router>
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>

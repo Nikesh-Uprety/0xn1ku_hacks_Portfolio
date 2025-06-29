@@ -42,7 +42,7 @@
   }
 
   body {
-    @apply bg-dark-bg text-foreground font-sans;
+    @apply bg-background text-foreground font-sans;
     font-size: 16px;
     line-height: 1.6;
     /* Keep native cursor visible */
