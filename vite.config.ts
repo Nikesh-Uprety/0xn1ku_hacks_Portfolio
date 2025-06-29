@@ -12,6 +12,12 @@ export default defineConfig(({ mode }) => ({
     fs: {
       allow: ["."],
     },
+    export default defineConfig({
+  root: 'client',
+  build: {
+    outDir: '../dist'
+  }
+}),
     middlewareMode: false,
     historyApiFallback: true,
   },
