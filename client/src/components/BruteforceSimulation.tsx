@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 import { DecodingText } from './DecodingText';
 
 interface BruteforceSimulationProps {
@@ -20,7 +20,7 @@ export const BruteforceSimulation = ({ onComplete }: BruteforceSimulationProps) 
   const [isScanning, setIsScanning] = useState(true);
   const [results, setResults] = useState<ScanResult[]>([]);
   const [scanComplete, setScanComplete] = useState(false);
-  const navigate = useNavigate();
+  const [location, navigate] = useLocation();
 
   const scanResults: ScanResult[] = [
     { status: 200, route: "/blogs", message: "200 OK", color: "text-neon-green", clickable: true },
