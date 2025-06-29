@@ -17,8 +17,8 @@ import type {
   UpdatePortfolioContent 
 } from '@shared/schema';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-key';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://ljqbboufswoqsdplmjjk.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqcWJib3Vmc3dvcXNkcGxtamprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NTcxMzAsImV4cCI6MjA2NjMzMzEzMH0.qKZkjDDO1wGW_pIhYYhKeVPXRXNmO0mZY91k1yKaXws';
 
 // Only create client if we have real credentials
 const hasRealCredentials = supabaseUrl !== 'https://placeholder.supabase.co' && supabaseAnonKey !== 'placeholder-key';

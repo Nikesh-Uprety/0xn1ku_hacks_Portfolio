@@ -33,7 +33,8 @@ import {
   Filter,
   MoreHorizontal,
   Globe,
-  Lock
+  Lock,
+  Terminal
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -177,31 +178,111 @@ export const AdminDashboard = () => {
     }
   });
 
-  // Similar mutations for other entities (hacks, secrets, projects)
+  // Mutations for hacks
   const createHackMutation = useMutation({
     mutationFn: createHack,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/hacks'] });
       toast({ title: "Hack created successfully" });
       setIsCreateDialogOpen(false);
+    },
+    onError: (error: any) => {
+      toast({ title: "Error creating hack", description: error.message, variant: "destructive" });
     }
   });
 
+  const updateHackMutation = useMutation({
+    mutationFn: ({ id, updates }: { id: number; updates: any }) => updateHack(id, updates),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/hacks'] });
+      toast({ title: "Hack updated successfully" });
+      setEditingItem(null);
+    },
+    onError: (error: any) => {
+      toast({ title: "Error updating hack", description: error.message, variant: "destructive" });
+    }
+  });
+
+  const deleteHackMutation = useMutation({
+    mutationFn: deleteHack,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/hacks'] });
+      toast({ title: "Hack deleted successfully" });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error deleting hack", description: error.message, variant: "destructive" });
+    }
+  });
+
+  // Mutations for secrets
   const createSecretMutation = useMutation({
     mutationFn: createSecret,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/secrets'] });
       toast({ title: "Secret created successfully" });
       setIsCreateDialogOpen(false);
+    },
+    onError: (error: any) => {
+      toast({ title: "Error creating secret", description: error.message, variant: "destructive" });
     }
   });
 
+  const updateSecretMutation = useMutation({
+    mutationFn: ({ id, updates }: { id: number; updates: any }) => updateSecret(id, updates),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/secrets'] });
+      toast({ title: "Secret updated successfully" });
+      setEditingItem(null);
+    },
+    onError: (error: any) => {
+      toast({ title: "Error updating secret", description: error.message, variant: "destructive" });
+    }
+  });
+
+  const deleteSecretMutation = useMutation({
+    mutationFn: deleteSecret,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/secrets'] });
+      toast({ title: "Secret deleted successfully" });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error deleting secret", description: error.message, variant: "destructive" });
+    }
+  });
+
+  // Mutations for projects
   const createProjectMutation = useMutation({
     mutationFn: createProject,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/projects'] });
       toast({ title: "Project created successfully" });
       setIsCreateDialogOpen(false);
+    },
+    onError: (error: any) => {
+      toast({ title: "Error creating project", description: error.message, variant: "destructive" });
+    }
+  });
+
+  const updateProjectMutation = useMutation({
+    mutationFn: ({ id, updates }: { id: number; updates: any }) => updateProject(id, updates),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/projects'] });
+      toast({ title: "Project updated successfully" });
+      setEditingItem(null);
+    },
+    onError: (error: any) => {
+      toast({ title: "Error updating project", description: error.message, variant: "destructive" });
+    }
+  });
+
+  const deleteProjectMutation = useMutation({
+    mutationFn: deleteProject,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/projects'] });
+      toast({ title: "Project deleted successfully" });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error deleting project", description: error.message, variant: "destructive" });
     }
   });
 
@@ -250,11 +331,11 @@ export const AdminDashboard = () => {
       case 'blogs':
         return <BlogsTable data={filteredData(blogs)} onEdit={setEditingItem} onDelete={(id) => deleteBlogMutation.mutate(id)} />;
       case 'hacks':
-        return <HacksTable data={filteredData(hacks)} onEdit={setEditingItem} onDelete={(id) => deleteHack(id)} />;
+        return <HacksTable data={filteredData(hacks)} onEdit={setEditingItem} onDelete={(id) => deleteHackMutation.mutate(id)} />;
       case 'secrets':
-        return <SecretsTable data={filteredData(secrets)} onEdit={setEditingItem} onDelete={(id) => deleteSecret(id)} />;
+        return <SecretsTable data={filteredData(secrets)} onEdit={setEditingItem} onDelete={(id) => deleteSecretMutation.mutate(id)} />;
       case 'projects':
-        return <ProjectsTable data={filteredData(projects)} onEdit={setEditingItem} onDelete={(id) => deleteProject(id)} />;
+        return <ProjectsTable data={filteredData(projects)} onEdit={setEditingItem} onDelete={(id) => deleteProjectMutation.mutate(id)} />;
       case 'portfolio':
         return <PortfolioTable data={filteredData(portfolioContent)} onEdit={setEditingItem} />;
       default:
@@ -296,18 +377,18 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      {/* Header */}
-      <div className="border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+      {/* Header - Terminal Style */}
+      <div className="border-b border-gray-700 bg-gray-900/95 backdrop-blur-sm sticky top-0 z-40">
         <div className="flex h-16 items-center justify-between px-6">
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-accent-teal to-blue-500 rounded-lg flex items-center justify-center">
-                <Settings className="w-4 h-4 text-white" />
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-accent-teal to-green-500 rounded-lg flex items-center justify-center">
+                <Terminal className="w-4 h-4 text-gray-900" />
               </div>
               <div>
-                <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Admin Dashboard</h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Content Management System</p>
+                <h1 className="text-xl font-semibold text-white font-mono">0xN1kU_H4X_! Control Panel</h1>
+                <p className="text-sm text-accent-teal font-mono">./admin_dashboard --secure</p>
               </div>
             </div>
           </div>
@@ -315,32 +396,37 @@ export const AdminDashboard = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
-                placeholder="Search content..."
+                placeholder="Search database..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-64 bg-white/50 dark:bg-gray-800/50"
+                className="pl-10 w-64 bg-gray-800/50 border-gray-600 text-green-400 font-mono placeholder:text-gray-500 focus:border-accent-teal"
               />
             </div>
-            <Button onClick={handleLogout} variant="outline" size="sm">
-              Logout
+            <Button 
+              onClick={handleLogout} 
+              variant="outline" 
+              size="sm"
+              className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white font-mono"
+            >
+              Exit
             </Button>
           </div>
         </div>
       </div>
 
       <div className="flex h-[calc(100vh-4rem)]">
-        {/* Sidebar */}
-        <div className="w-64 bg-white dark:bg-gray-900 border-r flex flex-col">
+        {/* Sidebar - Terminal Style */}
+        <div className="w-64 bg-gray-800/50 border-r border-gray-700 flex flex-col backdrop-blur-sm">
           {/* Stats Cards */}
           <div className="p-6 space-y-4">
-            <h2 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Overview</h2>
+            <h2 className="font-semibold text-white mb-3 font-mono">System Overview</h2>
             <div className="grid grid-cols-2 gap-3">
               {getStats().map((stat, index) => (
-                <Card key={index} className="p-3">
+                <Card key={index} className="p-3 bg-gray-900/50 border-gray-600">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-2xl font-bold">{stat.value}</p>
-                      <p className="text-xs text-gray-500">{stat.title}</p>
+                      <p className="text-2xl font-bold text-accent-teal font-mono">{stat.value}</p>
+                      <p className="text-xs text-gray-400 font-mono">{stat.title}</p>
                     </div>
                     <div className={stat.color}>
                       {stat.icon}
@@ -351,7 +437,7 @@ export const AdminDashboard = () => {
             </div>
           </div>
 
-          <Separator />
+          <Separator className="bg-gray-700" />
 
           {/* Navigation */}
           <div className="flex-1 p-4">
@@ -366,10 +452,10 @@ export const AdminDashboard = () => {
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium font-mono transition-colors ${
                     activeTab === item.id
-                      ? 'bg-accent-teal/10 text-accent-teal border border-accent-teal/20'
-                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      ? 'bg-accent-teal/20 text-accent-teal border border-accent-teal/30'
+                      : 'text-gray-300 hover:bg-gray-700/50 hover:text-white'
                   }`}
                 >
                   <item.icon className="w-4 h-4" />
@@ -380,33 +466,33 @@ export const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Main Content */}
+        {/* Main Content - Terminal Style */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Content Header */}
-          <div className="p-6 bg-white dark:bg-gray-900 border-b">
+          <div className="p-6 bg-gray-900/50 border-b border-gray-700">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 {getTabIcon(activeTab)}
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 capitalize">
+                  <h2 className="text-2xl font-bold text-white capitalize font-mono">
                     {activeTab === 'portfolio' ? 'Portfolio Content' : activeTab}
                   </h2>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Manage your {activeTab === 'portfolio' ? 'portfolio content' : activeTab}
+                  <p className="text-gray-400 font-mono">
+                    ./manage_{activeTab === 'portfolio' ? 'portfolio' : activeTab} --database
                   </p>
                 </div>
               </div>
               <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-accent-teal hover:bg-accent-teal/90">
+                  <Button className="bg-accent-teal hover:bg-accent-teal/90 text-black font-mono font-semibold">
                     <Plus className="w-4 h-4 mr-2" />
                     Create New
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-700">
                   <DialogHeader>
-                    <DialogTitle>Create New {activeTab.slice(0, -1)}</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-white font-mono">Create New {activeTab.slice(0, -1)}</DialogTitle>
+                    <DialogDescription className="text-gray-400 font-mono">
                       Add a new {activeTab.slice(0, -1)} to your {activeTab} collection.
                     </DialogDescription>
                   </DialogHeader>
@@ -418,7 +504,7 @@ export const AdminDashboard = () => {
 
           {/* Content Area */}
           <div className="flex-1 p-6 overflow-auto">
-            <Card className="h-full">
+            <Card className="h-full bg-gray-800/30 border-gray-700">
               <CardContent className="p-0">
                 {renderDataTable()}
               </CardContent>

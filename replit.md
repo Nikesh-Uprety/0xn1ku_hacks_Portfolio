@@ -87,7 +87,11 @@ This is a full-stack portfolio website built with a React frontend and Express.j
 - Fallback to in-memory storage when database is not configured
 
 ## Changelog
-- June 29, 2025. Initial setup
+- June 29, 2025. Initial setup and Lovable to Replit migration
+- June 29, 2025. Created terminal-aesthetic admin login page
+- June 29, 2025. Completely redesigned admin dashboard with cyberpunk theme
+- June 29, 2025. Fixed CRUD operations for all content types (blogs, hacks, secrets, projects)
+- June 29, 2025. Updated all pages to use Supabase database instead of static data
 
 ## User Preferences
 
