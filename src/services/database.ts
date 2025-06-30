@@ -12,7 +12,7 @@ const hasRealCredentials =
   supabaseUrl.length > 0 && 
   supabaseAnonKey.length > 0 &&
   supabaseUrl !== 'https://ljqbboufswoqsdplmjjk.supabase.co' && 
-  supabaseAnonKey !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqcWJib3Vmc3dvcXNkcGxtamprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NTcxMzAsImV4cCI6MjA2NjMzMzEzMH0.qKZkjDDO1wGW_pIhYYhKeVPXRXNmO0mZY91k1yKaXws';
+  supabaseAnonKey !== 'heyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqcWJib3Vmc3dvcXNkcGxtamprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NTcxMzAsImV4cCI6MjA2NjMzMzEzMH0.qKZkjDDO1wGW_pIhYYhKeVPXRXNmO0mZY91k1yKaXws';
 
 export const supabase = hasRealCredentials ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
