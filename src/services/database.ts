@@ -1,13 +1,18 @@
-
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl =
-  import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey =
-  import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Only create client if we have real credentials
-const hasRealCredentials = supabaseUrl !== 'https://placeholder.supabase.co' && supabaseAnonKey !== 'placeholder-key';
+const hasRealCredentials = 
+  supabaseUrl && 
+  supabaseAnonKey && 
+  typeof supabaseUrl === 'string' && 
+  typeof supabaseAnonKey === 'string' &&
+  supabaseUrl.length > 0 && 
+  supabaseAnonKey.length > 0 &&
+  supabaseUrl !== '' && 
+  supabaseAnonKey !== '';
 
 export const supabase = hasRealCredentials ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
