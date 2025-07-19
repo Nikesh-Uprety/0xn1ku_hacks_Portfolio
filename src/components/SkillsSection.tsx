@@ -14,7 +14,7 @@ export const SkillsSection = () => {
               <span className="text-gray-500">├──</span>
               <span className="ml-2">
                 <span className="text-purple-400">languages</span>: JavaScript,
-                Python, C, Go, Bash 
+                Python, C, Go, Bash
               </span>
             </div>
             <div className="flex">
@@ -71,7 +71,7 @@ export const SkillsSection = () => {
               <li>• Explore React.js Development (20hrs)</li>
               <li>• Javascript30 - Wes Bos (Build 30 apps in 30 Days)</li>
               <li>• Javascript - For Beginners</li>
-              <li>• Basics of web - Internet fundamentals</li>
+              <li>• FrontEnd Javascript Libraries - FreeCodeCamp</li>
               <li>• Offensive Penetration Testing</li>
             </ul>
           </div>
@@ -81,9 +81,9 @@ export const SkillsSection = () => {
               CTF Rankings
             </h3>
             <ul className="space-y-2 text-gray-300">
-              <li>• PicoCTF 2024: Top 5%</li>
-              <li>• TryHackMe: Top 10%</li>
-              <li>• Local CTFs: Multiple Wins</li>
+              <li>Hidden.........</li>
+              <li>Hidden.........</li>
+              <li>Hidden.........</li>
             </ul>
           </div>
         </div>

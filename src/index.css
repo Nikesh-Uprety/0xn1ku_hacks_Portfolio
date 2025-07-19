@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    font-family: 'Courier New', monospace;
     --background: 220 13% 4%;
     --foreground: 210 40% 98%;
 
@@ -36,6 +37,8 @@
   }
 }
 
+
+
 @layer base {
   * {
     @apply border-border;
@@ -49,6 +52,10 @@
     cursor: auto;
   }
 
+  .text-primary {
+    color: hsl(150, 100%, 99.6%);
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -58,7 +65,7 @@
     html {
       scroll-behavior: auto;
     }
-    
+
     *,
     *::before,
     *::after {
@@ -66,7 +73,7 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
-    
+
     /* Disable custom cursor on reduced motion */
     .custom-cursor {
       display: none !important;
@@ -99,8 +106,16 @@
   }
 
   @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+
+    0%,
+    50% {
+      opacity: 1;
+    }
+
+    51%,
+    100% {
+      opacity: 0;
+    }
   }
 
   /* Focus styles for accessibility */
@@ -140,7 +155,12 @@
 }
 
 /* Typography improvements */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
   line-height: 1.2;
 }
@@ -181,13 +201,15 @@ button:disabled:hover {
 }
 
 /* Form improvements */
-input, textarea {
+input,
+textarea {
   font-family: inherit;
   cursor: text;
   transition: all 0.2s ease-out;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
   box-shadow: 0 0 0 2px #64ffda40;
   transform: scale(1.01);
@@ -204,19 +226,27 @@ input:focus, textarea:focus {
 }
 
 /* Disable cursor glow on mobile */
-@media (max-width: 768px), (hover: none) {
+@media (max-width: 768px),
+(hover: none) {
   .custom-cursor {
     display: none;
   }
 }
 
 /* Enhanced hover effects for interactive elements */
-a, button, [role="button"], input, textarea, select, [onclick] {
+a,
+button,
+[role="button"],
+input,
+textarea,
+select,
+[onclick] {
   transition: transform 150ms ease-out;
 }
 
 /* Reduced motion support for hover effects */
 @media (prefers-reduced-motion: reduce) {
+
   .hover-scale:hover,
   .text-hover:hover,
   a:hover,
